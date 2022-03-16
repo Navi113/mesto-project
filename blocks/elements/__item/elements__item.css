@@ -1,0 +1,8 @@
+.elements__item {
+  height: 361px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+}
