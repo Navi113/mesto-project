@@ -10,14 +10,14 @@
 @media screen and (max-width: 1023px) {
   .profile {
     max-width: 100%;
-    padding: 42px 60px 36px;
+    padding: 42px 60px 0;
   }
 }
 
 @media screen and (max-width: 767px) {
   .profile {
     max-width: 100%;
-    padding: 42px 19px 36px;
+    padding: 42px 19px 0;
     flex-direction: column;
     justify-content: flex-start;
   }

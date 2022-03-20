@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Mesto Russia</title>
-  <link rel="stylesheet" href="./fonts.css">
   <link rel="stylesheet" href="./pages/index.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Место Россия">
@@ -32,7 +31,9 @@
           </p>
         </div>
       </div>
-      <button class="profile__add-button" type="button" aria-label="добавить"></button>
+      <button class="profile__add-button" type="button" aria-label="добавить">
+        <img src="./images/plus.svg" alt="плюс" class="profile__add-button-plus">
+      </button>
     </section>
     <section class="elements" aria-label="Сетка фотографий">
       <ul class="elements__list">
@@ -82,17 +83,17 @@
     </section>
   </main>
   <footer class="footer">
-    <p class="footer__copyright">© 2020 Mesto Russia</p>
+    <p class="footer__copyright">&#169; 2020 Mesto Russia</p>
   </footer>
-  <div class="popup">
+  <div class="popup popup_opened">
     <div class="popup__container">
       <h2 class="popup__heading">Редактировать профиль</h2>
-      <form class="popup__form" action="#" name="форма">
-        <input class="popup__input" type="text" placeholder="Жак-Ив Кусто" name="имя">
-        <input class="popup__input" type="text" placeholder="Исследователь океана" name="описание">
+      <form class="popup__form" action="#" name="form">
+        <input class="popup__input" type="text" required placeholder="Жак-Ив Кусто" name="name">
+        <input class="popup__input" type="text" required placeholder="Исследователь океана" name="discription">
         <button class="popup__save-button" type="submit"  aria-label="сохранить">Сохранить</button>
       </form>
-      <button class="popup__close-button"></button>
+      <button class="popup__close-button" type="button" name="close"></button>
     </div>
   </div>
 </body>

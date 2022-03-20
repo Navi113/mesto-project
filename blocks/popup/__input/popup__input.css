@@ -1,9 +1,16 @@
 .popup__input {
   width: 358px;
   border: none;
-  padding: 0 0 13px 0;
-  margin: 30px 0 0;
+  padding: 31px 0 8px 0;
+  margin: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.popup__input:focus {
+  outline: none;
+  border: 3px solid #840fc8;
 }
 
 @media screen and (max-width: 767px) {
@@ -13,11 +20,11 @@
 }
 
 .popup__input:first-child {
-  margin: 54px 0 0;
+  margin: 17px 0 0;
 }
 
 @media screen and (max-width: 767px) {
   .popup__input:first-child {
-    margin: 75px 0 0;
+    margin: 43px 0 0;
   }
 }
