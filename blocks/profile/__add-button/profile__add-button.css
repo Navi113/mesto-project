@@ -5,15 +5,15 @@
   justify-content: center;
   align-items: center;
   padding: 0;
-  border: 1px solid #fff;
+  border: 2px solid #fff;
   border-radius: 2px;
   background-color: transparent;
   cursor: pointer;
+  transition: opacity .3s linear;
 }
 
 .profile__add-button:hover {
   opacity: 0.6;
-  transition: opacity .3s linear;
 }
 
 @media screen and (max-width: 767px) {

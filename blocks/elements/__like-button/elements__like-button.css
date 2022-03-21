@@ -8,9 +8,9 @@
   padding: 0;
   border: none;
   cursor: pointer;
+  transition: opacity .3s linear;
 }
 
 .elements__like-button:hover {
   opacity: 0.5;
-  transition: opacity .3s linear;
 }

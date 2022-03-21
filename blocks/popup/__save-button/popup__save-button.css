@@ -7,7 +7,7 @@
   color: #fff;
   border-radius: 2px;
   border: none;
-  margin: 49px 0 0;
+  margin: 49px 0 37px;
   padding: 14px 0;
   cursor: pointer;
 }
@@ -17,7 +17,7 @@
     width: 238px;
     font-size: 14px;
     line-height: 17px;
-    margin: 46px 0 0;
+    margin: 46px 0 25px;
     padding: 14px 0 15px;
   }
 }
