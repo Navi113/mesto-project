@@ -10,7 +10,8 @@
 
 .popup__input:focus {
   outline: none;
-  border: 3px solid #840fc8;
+  border: 3px solid #0c97d8;
+  border-radius: 5px;
 }
 
 @media screen and (max-width: 767px) {
