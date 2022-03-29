@@ -22,9 +22,8 @@ popupCloseButton.addEventListener('click', function one () {
 const formElement = document.querySelector('.popup__form');
 function formSubmitHandler (evt) {
    evt.preventDefault();
+
 profileTitle.textContent = `${userName.value}`;
 profileSubtitle.textContent = `${discription.value}`;
-popup.classList.remove('popup_opened');
 };
-
 formElement.addEventListener('submit', formSubmitHandler);

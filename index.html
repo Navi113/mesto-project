@@ -21,14 +21,10 @@
         <img src="./images/avatar.jpeg" alt="аватар" class="profile__avatar">
         <div class="profile__info">
           <div class="profile__title-container">
-            <h1 class="profile__title">
-              Жак-Ив Кусто
-            </h1>
+            <h1 class="profile__title">Жак-Ив Кусто</h1>
             <button class="profile__edit-button" type="button" aria-label="редактировать"></button>
           </div>
-          <p class="profile__subtitle">
-            Исследователь океана
-          </p>
+          <p class="profile__subtitle">Исследователь океана</p>
         </div>
       </div>
       <button class="profile__add-button" type="button" aria-label="добавить">
@@ -76,7 +72,8 @@
           <img src="./images/dombai.jpeg" alt="Домбай" class="elements__image">
           <div class="elements__discription">
             <h2 class="elements__title">Домбай</h2>
-            <button class="elements__like-button elements__like-button_active" type="button" aria-label="нравится"></button>
+            <button class="elements__like-button elements__like-button_active" type="button"
+              aria-label="нравится"></button>
           </div>
         </li>
       </ul>
@@ -89,9 +86,10 @@
     <div class="popup__container">
       <h2 class="popup__heading">Редактировать профиль</h2>
       <form class="popup__form" action="#" name="form">
-        <input class="popup__input popup__input_type_name" type="text" required placeholder="Жак-Ив Кусто" name="name">
-        <input class="popup__input popup__input_type_discription" type="text" required placeholder="Исследователь океана" name="discription">
-        <button class="popup__save-button" type="submit"  aria-label="сохранить">Сохранить</button>
+        <input class="popup__input popup__input_name" type="text" required placeholder="Имя" name="name">
+        <input class="popup__input popup__input_discription" type="text" required placeholder="О Вас"
+          name="discription">
+        <button class="popup__save-button" type="submit" aria-label="сохранить">Сохранить</button>
       </form>
       <button class="popup__close-button" type="button" name="close" aria-label="закрыть"></button>
     </div>
@@ -100,4 +98,3 @@
 </body>
 
 </html>
-
