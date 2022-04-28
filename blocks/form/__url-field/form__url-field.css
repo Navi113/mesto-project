@@ -1,4 +1,4 @@
-.popup__input {
+.form__url-field {
   width: 358px;
   border: none;
   padding: 31px 0 8px 0;
@@ -8,24 +8,24 @@
   line-height: 17px;
 }
 
-.popup__input:focus {
+.form__url-field:focus {
   outline: none;
-  border: 3px solid #0c97d8;
+  border: 3px solid #0f7ec8;
   border-radius: 5px;
 }
 
 @media screen and (max-width: 767px) {
-  .popup__input {
+  .form__url-field {
     width: 238px;
   }
 }
 
-.popup__input:first-child {
+.form__url-field:first-child {
   margin: 17px 0 0;
 }
 
 @media screen and (max-width: 767px) {
-  .popup__input:first-child {
+  .form__url-field:first-child {
     margin: 43px 0 0;
   }
 }
