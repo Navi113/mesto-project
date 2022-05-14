@@ -141,9 +141,9 @@ function openImage(titleImage, linkImage, altImage) {
 function clickImage(cardImage) {
   cardImage.addEventListener('click', function (evt) {
     const card = evt.target.closest('.elements__item');
-    const titleImage = card.querySelector('.popup__image-subtitle').textContent;
+    const titleImage = card.querySelector('.elements__title').textContent;
     const linkImage = card.querySelector('.elements__image').getAttribute('src');
-    const altImage = card.querySelector('.popup__image-subtitle').getAttribute('alt');
+    const altImage = card.querySelector('.elements__title').getAttribute('alt');
     openImage(titleImage, linkImage, altImage);
   });
 }
