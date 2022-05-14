@@ -45,6 +45,10 @@
 @import url(../blocks/popup/__heading/popup__heading.css);
 @import url(../blocks/popup/__save-button/popup__save-button.css);
 @import url(../blocks/popup/__close-button/popup__close-button.css);
+@import url(../blocks/popup/_image/popup_image.css);
+@import url(../blocks/popup/__container-image/popup__container-image.css);
+@import url(../blocks/popup/__image/popup__image.css);
+@import url(../blocks/popup/__image-subtitle/popup__image-subtitle.css);
 
 /* form */
 @import url(../blocks/form/form.css);

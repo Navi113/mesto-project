@@ -4,5 +4,5 @@
   align-items: center;
   visibility: visible;
   opacity: 1;
-  transition: visibility .5s, opacity .1s linear;
+  transition: visibility .4s, opacity .4s linear;
 }

@@ -1,0 +1,9 @@
+.popup__image-subtitle {
+  color: #fff;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.2;
+  position: relative;
+  z-index: 2;
+  margin: 10px 0 0 0;
+}
