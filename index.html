@@ -12,91 +12,91 @@
 </head>
 
 <body class="page">
+
   <header class="header">
     <img src="./images/logo.svg" alt="логотип" class="header__logo">
   </header>
+
   <main class="main">
+
     <section class="profile">
       <div class="profile__container">
         <img src="./images/avatar.jpeg" alt="аватар" class="profile__avatar">
         <div class="profile__info">
           <div class="profile__title-container">
-            <h1 class="profile__title">
-              Жак-Ив Кусто
-            </h1>
+            <h1 class="profile__title">Жак-Ив Кусто</h1>
             <button class="profile__edit-button" type="button" aria-label="редактировать"></button>
           </div>
-          <p class="profile__subtitle">
-            Исследователь океана
-          </p>
+          <p class="profile__subtitle">Исследователь океана</p>
         </div>
       </div>
       <button class="profile__add-button" type="button" aria-label="добавить">
         <img src="./images/plus.svg" alt="плюс" class="profile__add-button-plus">
       </button>
     </section>
+
     <section class="elements" aria-label="Сетка фотографий">
       <ul class="elements__list">
-        <li class="elements__item">
-          <img src="./images/Karachaevsk.jpeg" alt="Карачаевск" class="elements__image">
-          <div class="elements__discription">
-            <h2 class="elements__title">Карачаевск</h2>
-            <button class="elements__like-button" type="button" aria-label="нравится"></button>
-          </div>
-        </li>
-        <li class="elements__item">
-          <img src="./images/dombai.jpeg" alt="Домбай" class="elements__image">
-          <div class="elements__discription">
-            <h2 class="elements__title">Домбай</h2>
-            <button class="elements__like-button" type="button" aria-label="нравится"></button>
-          </div>
-        </li>
-        <li class="elements__item">
-          <img src="./images/elbrus.jpeg" alt="Эльбрус" class="elements__image">
-          <div class="elements__discription">
-            <h2 class="elements__title">Эльбрус</h2>
-            <button class="elements__like-button" type="button" aria-label="нравится"></button>
-          </div>
-        </li>
-        <li class="elements__item">
-          <img src="./images/elbrus.jpeg" alt="Эльбрус" class="elements__image">
-          <div class="elements__discription">
-            <h2 class="elements__title">Эльбрус</h2>
-            <button class="elements__like-button" type="button" aria-label="нравится"></button>
-          </div>
-        </li>
-        <li class="elements__item">
-          <img src="./images/Karachaevsk.jpeg" alt="Карачаевск" class="elements__image">
-          <div class="elements__discription">
-            <h2 class="elements__title">Карачаевск</h2>
-            <button class="elements__like-button" type="button" aria-label="нравится"></button>
-          </div>
-        </li>
-        <li class="elements__item">
-          <img src="./images/dombai.jpeg" alt="Домбай" class="elements__image">
-          <div class="elements__discription">
-            <h2 class="elements__title">Домбай</h2>
-            <button class="elements__like-button elements__like-button_active" type="button" aria-label="нравится"></button>
-          </div>
-        </li>
+
       </ul>
     </section>
+
   </main>
+
   <footer class="footer">
-    <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+    <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
   </footer>
-  <div class="popup popup_opened">
+
+  <!-- Форма редактирования профиля -->
+  <div class="popup" id="popup-edit-profile">
     <div class="popup__container">
       <h2 class="popup__heading">Редактировать профиль</h2>
-      <form class="popup__form" action="#" name="form">
-        <input class="popup__input" type="text" required placeholder="Жак-Ив Кусто" name="name">
-        <input class="popup__input" type="text" required placeholder="Исследователь океана" name="discription">
-        <button class="popup__save-button" type="submit"  aria-label="сохранить">Сохранить</button>
+      <form id="form-edit-profile" class="form" action="#" name="form">
+        <input class="form__text-field" id="form-edit-profile-name" type="text" required placeholder="Имя" name="name">
+        <input class="form__text-field" id="form-edit-profile-about" type="text" required placeholder="О Вас"
+          name="about">
+        <button class="popup__save-button" type="submit" aria-label="сохранить">Сохранить</button>
       </form>
       <button class="popup__close-button" type="button" name="close" aria-label="закрыть"></button>
     </div>
   </div>
+
+  <!-- Форма добавления новой карточки -->
+  <div class="popup" id="popup-add-card">
+    <div class="popup__container">
+      <h2 class="popup__heading">Новое место</h2>
+      <form id="form-add-img" class="form" action="#" name="form">
+        <input id="form-text-field" class="form__text-field" type="text" required placeholder="Название" name="name">
+        <input id="form-url-field" class="form__url-field" type="url" required placeholder="Ссылка на картинку"
+          name="url">
+        <button class="popup__save-button" type="submit" aria-label="сохранить">Создать</button>
+      </form>
+      <button class="popup__close-button" type="button" name="close" aria-label="закрыть"></button>
+    </div>
+  </div>
+
+  <!-- Попап картинки -->
+  <div class="popup popup_image">
+    <div class="popup__container-image">
+      <button class="popup__close-button" type="button"></button>
+      <img class="popup__image" src="./images/Karachaevsk.jpeg" alt="">
+      <p class="popup__image-subtitle">Название</p>
+    </div>
+  </div>
+
+  <!-- Шаблон для добавления карточек -->
+  <template id="item-template">
+    <li class="elements__item">
+      <img src="./images/Karachaevsk.jpeg" alt="К" class="elements__image">
+      <button class="elements__delete-button" type="button" aria-label="удалить"></button>
+      <div class="elements__discription">
+        <h2 class="elements__title">Карачаевск</h2>
+        <button class="elements__like-button" type="button" aria-label="нравится"></button>
+      </div>
+    </li>
+  </template>
+
+  <script src="script.js"></script>
 </body>
 
 </html>
-

@@ -1,0 +1,31 @@
+.form__text-field {
+  width: 358px;
+  border: none;
+  padding: 31px 0 8px 0;
+  margin: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.form__text-field:focus {
+  outline: none;
+  border: 3px solid #0f7ec8;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 767px) {
+  .form__text-field {
+    width: 238px;
+  }
+}
+
+.form__text-field:first-child {
+  margin: 17px 0 0;
+}
+
+@media screen and (max-width: 767px) {
+  .form__text-field:first-child {
+    margin: 43px 0 0;
+  }
+}
