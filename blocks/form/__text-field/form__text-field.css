@@ -6,13 +6,14 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   font-size: 14px;
   line-height: 17px;
+  outline: none;
 }
 
-.form__text-field:focus {
+/* .form__text-field:focus {
   outline: none;
-  border: 3px solid #0f7ec8;
+  border: 3px solid #0f7ec7;
   border-radius: 5px;
-}
+} */
 
 @media screen and (max-width: 767px) {
   .form__text-field {
