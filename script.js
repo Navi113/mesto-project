@@ -137,10 +137,6 @@ function submitFormCard(evt) {
 function openImage(titleImage, linkImage, altImage) {
   popupItemTitle.textContent = titleImage;
   popupItemImage.src = linkImage;
-  popupItemTitle.alt = altImage;
-  // popupImage.querySelector('.popup__image-subtitle').textContent = titleImage;
-  // popupImage.querySelector('.popup__image').src = linkImage;
-  // popupImage.querySelector('.popup__image-subtitle').alt = altImage;
   togglePopup(popupImage);
 }
 
