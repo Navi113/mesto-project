@@ -10,6 +10,7 @@
   margin: 49px 0 37px;
   padding: 14px 0;
   cursor: pointer;
+  transition: background-color .8s;
 }
 
 @media screen and (max-width: 767px) {
