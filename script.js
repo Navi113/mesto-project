@@ -34,15 +34,15 @@ const profileSubtitle = document.querySelector('.profile__subtitle');
 
 const popupEditProfile = document.querySelector('#popup-edit-profile');
 const popupProfileForm = popupEditProfile.querySelector('#form-edit-profile');
-const inputProfileName = popupProfileForm.querySelector('#form-edit-profile-name');
-const inputProfileAbout = popupProfileForm.querySelector('#form-edit-profile-about');
+const inputProfileName = popupProfileForm.querySelector('#form-input-name');
+const inputProfileAbout = popupProfileForm.querySelector('#form-input-about');
 
 // Добавление карточки
 const buttonAdd = document.querySelector('.profile__add-button');
 const popupAddCard = document.querySelector('#popup-add-card');
 const popupAddForm = popupAddCard.querySelector('#form-add-img');
-const inputAddName = popupAddForm.querySelector('#form-text-field');
-const inputAddLink = popupAddForm.querySelector('#form-url-field');
+const inputAddName = popupAddForm.querySelector('#form-input-place');
+const inputAddLink = popupAddForm.querySelector('#form-input-url');
 
 // Шаблон
 const template = document.querySelector('#item-template').content;
@@ -177,3 +177,69 @@ initialCards.forEach(function (element) {
   const oneCardElement = createCard(element.name, element.link);
   addCard(oneCardElement);
 });
+
+//----------------------------------------------------------------------------------
+
+// const formError = popupProfileForm.querySelector(`.${inputProfileName.id}-error`);
+// console.log(formError); DELETE
+
+const showError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add('form__text-field_type_error');
+  errorElement.textContent = errorMessage;
+  // formError.classList.add('form__text-field-error_active');
+};
+
+const hideError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove('form__text-field_type_error');
+  // formError.classList.remove('form__text-field-error_active');
+  errorElement.textContent = '';
+};
+
+const checkInputValidity = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+    showError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideError(formElement, inputElement);
+  }
+};
+
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.form__input'));
+  const buttonElement = formElement.querySelector('.popup__save-button');
+  toggleButtonState(inputList, buttonElement);
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', function () {
+      checkInputValidity(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+}
+
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.form'))
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+    });
+    setEventListeners(formElement);
+  });
+};
+
+const hasInvalidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+};
+
+const toggleButtonState = (inputList, buttonElement) => {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.classList.add('popup__save-button_disabled');
+  } else {
+    buttonElement.classList.remove('popup__save-button_disabled');
+  }
+}
+
+enableValidation();
+
