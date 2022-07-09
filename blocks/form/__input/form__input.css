@@ -8,6 +8,7 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   font-size: 14px;
   line-height: 17px;
+  font-family: inherit;
 }
 
 .form__input:last-of-type {
@@ -15,7 +16,6 @@
 }
 
 .form__input:focus {
-  outline: none;
   border-radius: 5px;
   outline: 3px solid #4bbced;
   transition: outline .2s;
