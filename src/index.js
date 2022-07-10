@@ -1,16 +1,18 @@
+import './pages/index.css';
+
 import {
   createCard,
   addCard,
-} from './card.js';
+} from './components/card.js';
 
 import {
   openPopup,
   closePopup,
-} from './modal.js';
+} from './components/modal.js';
 
 import {
   enableValidation
-} from './validate.js';
+} from './components/validate.js';
 
 // Массив-заготовка фотограий
 const initialCards = [{

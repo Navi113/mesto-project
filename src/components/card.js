@@ -10,7 +10,7 @@ import {
   popupImage,
   template,
   gallery,
-} from './index.js';
+} from '../index.js';
 
 // Функция открытия карточки
 function openImage(titleImage, linkImage, altImage) {

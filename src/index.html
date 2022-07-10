@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Mesto Russia</title>
-  <link rel="stylesheet" href="./pages/index.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Место Россия">
   <meta name="keywords" content="Место, Россия, Карачаевск, гора Эльбрус, Домбай, , Корачаево-черкесская республика">
@@ -14,14 +13,14 @@
 <body class="page">
 
   <header class="header">
-    <img src="./images/logo.svg" alt="логотип" class="header__logo">
+    <img src="<%=require('./images/logo.svg')%>" alt="логотип" class="header__logo">
   </header>
 
   <main class="main">
 
     <section class="profile">
       <div class="profile__container">
-        <img src="../src/images/avatar.jpeg" alt="аватар" class="profile__avatar">
+        <img src="<%=require('./images/avatar.jpeg')%>" alt="аватар" class="profile__avatar">
         <div class="profile__info">
           <div class="profile__title-container">
             <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -31,7 +30,7 @@
         </div>
       </div>
       <button class="profile__add-button" type="button" aria-label="добавить">
-        <img src="../src/images/plus.svg" alt="плюс" class="profile__add-button-plus">
+        <img src="<%=require('./images/plus.svg')%>" alt="плюс" class="profile__add-button-plus">
       </button>
     </section>
 
@@ -117,7 +116,7 @@
   <div class="popup popup_image">
     <div class="popup__container-image">
       <button class="popup__close-button" type="button"></button>
-      <img class="popup__image" src="../src/images/Karachaevsk.jpeg" alt="">
+      <img class="popup__image" src="<%=require('./images/Karachaevsk.jpeg')%>" alt="">
       <p class="popup__image-subtitle">Название</p>
     </div>
   </div>
@@ -125,7 +124,7 @@
   <!-- Шаблон для добавления карточек -->
   <template id="item-template">
     <li class="elements__item">
-      <img src="../src/images/Karachaevsk.jpeg" alt="К" class="elements__image">
+      <img src="<%=require('./images/Karachaevsk.jpeg')%>" alt="К" class="elements__image">
       <button class="elements__delete-button" type="button" aria-label="удалить"></button>
       <div class="elements__discription">
         <h2 class="elements__title">Карачаевск</h2>
@@ -133,8 +132,7 @@
       </div>
     </li>
   </template>
-
-  <script type="module" src="../src/components/index.js"></script>
 </body>
 
 </html>
+
