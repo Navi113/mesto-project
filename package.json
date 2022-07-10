@@ -1,8 +1,8 @@
 {
-  "name": "yandex-praktikum",
-  "version": "0.0.1",
-  "description": "## Данный проект представляет собой ~~статичную~~ *адаптивную* верстку.",
-  "main": "script.js",
+  "name": "mesto-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
