@@ -1,5 +1,5 @@
 /* normalize */
-@import url(..//vendor/normalize.css);
+@import url(../vendor/normalize.css);
 
 /* fonts */
 @import url(../vendor/fonts.css);
@@ -52,5 +52,7 @@
 
 /* form */
 @import url(../blocks/form/form.css);
-@import url(../blocks/form/__text-field/form__text-field.css);
-@import url(../blocks/form/__url-field/form__url-field.css);
+@import url(../blocks/form/__input/form__input.css);
+@import url(../blocks/form/__input-error/form__input-error.css);
+@import url(../blocks/form/__input-error/form__input-error_active.css);
+@import url(../blocks/form/__input/_type/form__input_type_error.css);

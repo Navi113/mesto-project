@@ -1,4 +1,18 @@
-// Переменные -------------------------------------------------------------------------------------
+import './pages/index.css';
+
+import {
+  createCard,
+  addCard,
+} from './components/card.js';
+
+import {
+  openPopup,
+  closePopup,
+} from './components/modal.js';
+
+import {
+  enableValidation
+} from './components/validate.js';
 
 // Массив-заготовка фотограий
 const initialCards = [{
@@ -34,15 +48,15 @@ const profileSubtitle = document.querySelector('.profile__subtitle');
 
 const popupEditProfile = document.querySelector('#popup-edit-profile');
 const popupProfileForm = popupEditProfile.querySelector('#form-edit-profile');
-const inputProfileName = popupProfileForm.querySelector('#form-edit-profile-name');
-const inputProfileAbout = popupProfileForm.querySelector('#form-edit-profile-about');
+const inputProfileName = popupProfileForm.querySelector('#form-input-name');
+const inputProfileAbout = popupProfileForm.querySelector('#form-input-about');
 
 // Добавление карточки
 const buttonAdd = document.querySelector('.profile__add-button');
 const popupAddCard = document.querySelector('#popup-add-card');
 const popupAddForm = popupAddCard.querySelector('#form-add-img');
-const inputAddName = popupAddForm.querySelector('#form-text-field');
-const inputAddLink = popupAddForm.querySelector('#form-url-field');
+const inputAddName = popupAddForm.querySelector('#form-input-place');
+const inputAddLink = popupAddForm.querySelector('#form-input-url');
 
 // Шаблон
 const template = document.querySelector('#item-template').content;
@@ -56,56 +70,19 @@ const popupItemTitle = popupImage.querySelector('.popup__image-subtitle');
 // Кнопка закрытия
 const buttonsClose = document.querySelectorAll('.popup__close-button');
 
-// Функции ----------------------------------------------------------------------------------------
-
-// Функция открытия/закрытия попапов
-function togglePopup(popup) {
-  popup.classList.toggle('popup_opened');
-}
-
 // Функция отправки формы редактироания профиля
 function submitFormProfile(evt) {
   evt.preventDefault(); // сбрасываем перезагрузку страницы
   profileTitle.textContent = inputProfileName.value;
   profileSubtitle.textContent = inputProfileAbout.value;
-  if (inputProfileName.value === ' ') {
+  // Многоходовочка :D
+  if (inputProfileName.value === '  ') {
     profileTitle.textContent = 'Ершов Иван';
   }
-  if (inputProfileAbout.value === ' ') {
+  if (inputProfileAbout.value === '  ') {
     profileSubtitle.textContent = 'Студент Яндекс.Практикум';
   }
-  togglePopup(popupEditProfile);
-}
-// Функция добавления карточки в HTML
-function addCard(oneCard) {
-  gallery.prepend(oneCard);
-}
-
-// Функция формирования карточки
-function createCard(name, link) {
-  // копируем контейнер карточки со всем содержимым
-  const oneCard = template.querySelector('.elements__item').cloneNode(true);
-  // находим селекторы карточки
-  const image = oneCard.querySelector('.elements__image'); // картинка
-  const imageTitle = oneCard.querySelector('.elements__title'); // название картинки
-  const buttonLike = oneCard.querySelector('.elements__like-button'); // кнопка нравится
-  const buttonDelete = oneCard.querySelector('.elements__delete-button'); // кнопка удалить
-
-  image.src = link;
-  image.alt = name;
-  imageTitle.textContent = name;
-
-  buttonLike.addEventListener('click', dropLike)
-  buttonDelete.addEventListener('click', deleteCard)
-  image.addEventListener('click', function (evt) {
-    const card = evt.target.closest('.elements__item');
-    const titleImage = card.querySelector('.elements__title').textContent;
-    const linkImage = card.querySelector('.elements__image').getAttribute('src');
-    const altImage = card.querySelector('.elements__title').getAttribute('alt');
-    openImage(titleImage, linkImage, altImage);
-  });
-
-  return oneCard;
+  closePopup(popupEditProfile);
 }
 
 // Функция лайк
@@ -119,39 +96,26 @@ function deleteCard(evt) {
   evt.target.closest('.elements__item').remove();
 }
 
-// Функция
-
 // Функция отправки формы карточки
 function submitFormCard(evt) {
   evt.preventDefault();
   const oneCardElement = createCard(inputAddName.value, inputAddLink.value);
   addCard(oneCardElement);
+  closePopup(popupAddCard);
   inputAddName.value = '';
   inputAddLink.value = '';
-  // document.querySelector('#form-text-field').reset(); НЕ РАЗОБРАЛСЯ КАК РАБОТАЕТ
-  // document.querySelector('#form-url-field').reset(); НЕ РАЗОБРАЛСЯ КАК РАБОТАЕТ
-  togglePopup(popupAddCard);
 }
-
-// Функция открытия карточки
-function openImage(titleImage, linkImage, altImage) {
-  popupItemTitle.textContent = titleImage;
-  popupItemImage.src = linkImage;
-  togglePopup(popupImage);
-}
-
-// Слушатели ---------------------------------------------------------------------------------------
 
 // Слушатель на кнопку редактировать
 buttonEdit.addEventListener('click', function () {
   inputProfileName.value = profileTitle.textContent;
   inputProfileAbout.value = profileSubtitle.textContent;
-  togglePopup(popupEditProfile);
+  openPopup(popupEditProfile);
 });
 
-// слушатель на кнопку добавить
+// Слушатель на кнопку добавить
 buttonAdd.addEventListener('click', function () {
-  togglePopup(popupAddCard);
+  openPopup(popupAddCard);
 });
 
 // Слушатель на отправку формы редактировать профиль
@@ -164,7 +128,7 @@ popupAddForm.addEventListener('submit', submitFormCard);
 buttonsClose.forEach(function (popupButtonClose) {
   const popupForClose = popupButtonClose.closest('.popup');
   popupButtonClose.addEventListener('click', function () {
-    togglePopup(popupForClose);
+    closePopup(popupForClose);
   });
 });
 
@@ -173,3 +137,21 @@ initialCards.forEach(function (element) {
   const oneCardElement = createCard(element.name, element.link);
   addCard(oneCardElement);
 });
+
+enableValidation({
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.popup__save-button',
+  inputErrorClass: 'form__input_type_error',
+  errorClass: 'form__input-error_active'
+});
+
+export {
+  template,
+  gallery,
+  popupImage,
+  popupItemImage,
+  popupItemTitle,
+  dropLike,
+  deleteCard
+};
