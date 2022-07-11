@@ -11,7 +11,9 @@ import {
 } from './components/modal.js';
 
 import {
-  enableValidation
+  enableValidation,
+  hasInvalidInput,
+  toggleButtonState
 } from './components/validate.js';
 
 // Массив-заготовка фотограий
@@ -68,7 +70,7 @@ const popupItemImage = popupImage.querySelector('.popup__image');
 const popupItemTitle = popupImage.querySelector('.popup__image-subtitle');
 
 // Кнопка закрытия
-const buttonsClose = document.querySelectorAll('.popup__close-button');
+// const buttonsClose = document.querySelectorAll('.popup__close-button');
 
 // Функция отправки формы редактироания профиля
 function submitFormProfile(evt) {
@@ -102,8 +104,7 @@ function submitFormCard(evt) {
   const oneCardElement = createCard(inputAddName.value, inputAddLink.value);
   addCard(oneCardElement);
   closePopup(popupAddCard);
-  inputAddName.value = '';
-  inputAddLink.value = '';
+  popupAddForm.reset();
 }
 
 // Слушатель на кнопку редактировать
@@ -116,6 +117,10 @@ buttonEdit.addEventListener('click', function () {
 // Слушатель на кнопку добавить
 buttonAdd.addEventListener('click', function () {
   openPopup(popupAddCard);
+  const form = popupAddCard.querySelector('#form-add-img');
+  const inputs = form.querySelectorAll('.form__input');
+  const submitBtn = form.querySelector('.popup__save-button');
+  toggleButtonState(inputs, submitBtn);
 });
 
 // Слушатель на отправку формы редактировать профиль
@@ -125,12 +130,26 @@ popupProfileForm.addEventListener('submit', submitFormProfile);
 popupAddForm.addEventListener('submit', submitFormCard);
 
 // Закрытие всех модыльных окон
-buttonsClose.forEach(function (popupButtonClose) {
-  const popupForClose = popupButtonClose.closest('.popup');
-  popupButtonClose.addEventListener('click', function () {
-    closePopup(popupForClose);
-  });
-});
+// buttonsClose.forEach(function (popupButtonClose) {
+//   const popupForClose = popupButtonClose.closest('.popup');
+//   popupButtonClose.addEventListener('mousedown', function () {
+//     closePopup(popupForClose);
+//   });
+// });
+
+// Закрытие всех попапов кликом на оверлей и кнопку закрыть
+const popups = document.querySelectorAll('.popup')
+
+popups.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
+      closePopup(popup)
+    }
+    if (evt.target.classList.contains('popup__close-button')) {
+      closePopup(popup)
+    }
+  })
+})
 
 // Рендерим карточки из массива
 initialCards.forEach(function (element) {
@@ -142,6 +161,7 @@ enableValidation({
   formSelector: '.form',
   inputSelector: '.form__input',
   submitButtonSelector: '.popup__save-button',
+  // inactiveButtonClass: 'popup__save-button_inactive',
   inputErrorClass: 'form__input_type_error',
   errorClass: 'form__input-error_active'
 });
