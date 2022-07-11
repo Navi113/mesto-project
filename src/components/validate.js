@@ -50,7 +50,7 @@ const enableValidation = (settings) => {
 
 // Функция проверяющая все ли окна  в форме валидны
 const hasInvalidInput = (inputList) => {
-  return inputList.some((inputElement) => {
+  return Array.from(inputList).some((inputElement) => {
     return !inputElement.validity.valid;
   });
 };
@@ -58,13 +58,20 @@ const hasInvalidInput = (inputList) => {
 // Функция переключатель состояния кнопки
 const toggleButtonState = (inputList, buttonElement) => {
   if (hasInvalidInput(inputList)) {
-    buttonElement.disabled = true;
-
+    buttonElement.setAttribute('disabled', true);
+    // buttonElement.disabled = true;
+    // buttonElement.classList.add(settings.inactiveButtonClass);
+    // buttonElement.setAttribute('disabled', true);
   } else {
-    buttonElement.disabled = false;
+    buttonElement.removeAttribute('disabled');
+    // buttonElement.disabled = false;
+    // buttonElement.classList.remove(settings.inactiveButtonClass);
+    // buttonElement.removeAttribute('disabled');
   }
 }
 
 export {
-  enableValidation
+  enableValidation,
+  hasInvalidInput,
+  toggleButtonState
 };
