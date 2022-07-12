@@ -59,6 +59,8 @@ const popupAddCard = document.querySelector('#popup-add-card');
 const popupAddForm = popupAddCard.querySelector('#form-add-img');
 const inputAddName = popupAddForm.querySelector('#form-input-place');
 const inputAddLink = popupAddForm.querySelector('#form-input-url');
+const inputs = popupAddForm.querySelectorAll('.form__input');
+const submitBtn = popupAddForm.querySelector('.popup__save-button');
 
 // Шаблон
 const template = document.querySelector('#item-template').content;
@@ -115,11 +117,16 @@ buttonEdit.addEventListener('click', function () {
 });
 
 // Слушатель на кнопку добавить
+// buttonAdd.addEventListener('click', function () {
+//   openPopup(popupAddCard);
+//   const form = popupAddCard.querySelector('#form-add-img');
+//   const inputs = form.querySelectorAll('.form__input');
+//   const submitBtn = form.querySelector('.popup__save-button');
+//   toggleButtonState(inputs, submitBtn);
+// });
+
 buttonAdd.addEventListener('click', function () {
   openPopup(popupAddCard);
-  const form = popupAddCard.querySelector('#form-add-img');
-  const inputs = form.querySelectorAll('.form__input');
-  const submitBtn = form.querySelector('.popup__save-button');
   toggleButtonState(inputs, submitBtn);
 });
 
