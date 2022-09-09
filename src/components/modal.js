@@ -27,8 +27,17 @@ function keyHandler(evt) {
   }
 }
 
+// Функция отображения загрузки на кнопке
+const renderFormLoading = (isLoading, submitButton) => {
+  if(isLoading) {
+    submitButton.textContent = 'Coхранение...'
+  } else {
+    submitButton.textContent = 'Сохранить'
+  }
+}
 
 export {
   openPopup,
-  closePopup
+  closePopup,
+  renderFormLoading
 }

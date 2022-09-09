@@ -1,20 +1,21 @@
 .form__input-error {
+  height: 25px;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
-  margin: 5px 0 0;
+  margin: 5px 0 5px;
   max-width: 358px;
   color: #f00;
-  position: absolute;
+  /* position: absolute;
   top: 40px;
-  left: 0;
+  left: 0; */
   opacity: 0;
   transition: opacity 1s, visibility 1s;
 }
 
-.form__input-error:last-of-type {
+/* .form__input-error:last-of-type {
   top: 120px;
   left: 0;
-}
+} */
