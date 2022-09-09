@@ -9,7 +9,7 @@
   color: #fff;
   border-radius: 2px;
   border: none;
-  margin: 0;
+  margin: 28px 0 0;
   padding: 14px 0;
   cursor: pointer;
   transition: background-color .8s;
@@ -20,6 +20,7 @@
     width: 238px;
     font-size: 14px;
     line-height: 17px;
+    margin: 28px 0 0;;
     padding: 14px 0 15px;
   }
 }

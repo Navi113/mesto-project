@@ -17,7 +17,12 @@
   <main class="main">
     <section class="profile">
       <div class="profile__container">
-        <img src="<%=require('./images/avatar.jpeg')%>" alt="аватар" class="profile__avatar">
+        <div class="profile__img-container">
+          <img src="<%=require('./images/avatar.jpeg')%>" alt="аватар" class="profile__avatar">
+          <div class="profile__avatar-overlay">
+            <button class="profile__edit-avatar" type="button" aria-label="изменить аватар"></button>
+          </div>
+        </div>
         <div class="profile__info">
           <div class="profile__title-container">
             <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -36,36 +41,20 @@
     </section>
   </main>
   <footer class="footer">
-    <p class="footer__copyright">&copy; 2022  Mesto Russia</p>
+    <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
   </footer>
   <!-- Форма редактирования профиля -->
   <div class="popup" id="popup-edit-profile">
     <div class="popup__container">
       <h2 class="popup__heading">Редактировать профиль</h2>
       <form id="form-edit-profile" class="form" action="#" name="form" novalidate>
-        <input
-          id="form-input-name"
-          class="form__input"
-          type="text"
-          required
-          placeholder="Имя"
-          name="name"
-          minlength="2"
-          maxlength="40"
-        >
+        <input id="form-input-name" class="form__input" type="text" required placeholder="Имя" name="name" minlength="2"
+          maxlength="40">
         <span class="form-input-name-error form__input-error"></span>
-        <input
-          id="form-input-about"
-          class="form__input"
-          type="text"
-          required
-          placeholder="О Вас"
-          name="about"
-          minlength="2"
-          maxlength="200"
-        >
+        <input id="form-input-about" class="form__input" type="text" required placeholder="О Вас" name="about"
+          minlength="2" maxlength="200">
         <span class="form-input-about-error form__input-error"></span>
-        <button class="popup__save-button" type="submit" aria-label="сохранить">Сохранить</button>
+        <button id="popup-save-btn" class="popup__save-button" type="submit" aria-label="сохранить">Сохранить</button>
       </form>
       <button class="popup__close-button" type="button" name="close" aria-label="закрыть"></button>
     </div>
@@ -75,29 +64,13 @@
     <div class="popup__container">
       <h2 class="popup__heading">Новое место</h2>
       <form id="form-add-img" class="form" action="#" name="form" novalidate>
-        <input
-          id="form-input-place"
-          class="form__input"
-          type="text"
-          value=""
-          required
-          placeholder="Название"
-          name="place"
-          minlength="2"
-          maxlength="30"
-        >
+        <input id="form-input-place" class="form__input" type="text" value="" required placeholder="Название"
+          name="place" minlength="2" maxlength="30">
         <span class="form-input-place-error form__input-error"></span>
-        <input
-          id="form-input-url"
-          class="form__input"
-          type="url"
-          value=""
-          required
-          placeholder="Ссылка на картинку"
-          name="url"
-        >
+        <input id="form-input-url" class="form__input" type="url" value="" required placeholder="Ссылка на картинку"
+          name="url">
         <span class="form-input-url-error form__input-error"></span>
-        <button class="popup__save-button" type="submit" aria-label="сохранить">Создать</button>
+        <button class="popup__save-button" type="submit" aria-label="сохранить">Сохранить</button>
       </form>
       <button class="popup__close-button" type="button" name="close" aria-label="закрыть"></button>
     </div>
@@ -106,10 +79,35 @@
   <div class="popup popup_image">
     <div class="popup__container-image">
       <button class="popup__close-button" type="button"></button>
-      <img class="popup__image" src="<%=require('./images/Karachaevsk.jpeg')%>" alt="">
-      <p class="popup__image-subtitle">Название</p>
+      <img class="popup__image" src="" alt="">
+      <p class="popup__image-subtitle"></p>
     </div>
   </div>
+  <!-- Попап формы добавления аватара -->
+  <div class="popup" id="popup-edit-avatar">
+    <div class="popup__container">
+      <h2 class="popup__heading">Обновить аватар</h2>
+      <form id="form-edit-avatar" class="form" action="#" name="form" novalidate>
+        <input id="form-avatar-input-url" class="form__input" type="url" value="" required
+          placeholder="Ссылка на картинку" name="url">
+        <span class="form__input_place_avatar form-avatar-input-url-error form__input-error"></span>
+        <button id="popop-save-button-avatar" class="popup__save-button" type="submit"
+          aria-label="сохранить">Сохранить</button>
+      </form>
+      <button class="popup__close-button" type="button" name="close" aria-label="закрыть"></button>
+    </div>
+  </div>
+    <!-- Попап подтверждения удаления карточки -->
+    <div class="popup" id="popup-delete-card">
+      <div class="popup__container">
+        <h2 class="popup__heading">Вы уверены?</h2>
+        <form id="form-delete-card" class="form" action="#" name="form" novalidate>
+          <button id="popop-delete-button" class="popup__save-button" type="submit"
+            aria-label="да">Да</button>
+        </form>
+        <button class="popup__close-button" type="button" name="close" aria-label="закрыть"></button>
+      </div>
+    </div>
   <!-- Шаблон для добавления карточек -->
   <template id="item-template">
     <li class="elements__item">
@@ -117,11 +115,13 @@
       <button class="elements__delete-button" type="button" aria-label="удалить"></button>
       <div class="elements__discription">
         <h2 class="elements__title">Карачаевск</h2>
-        <button class="elements__like-button" type="button" aria-label="нравится"></button>
+        <div class="elements__like-button-container">
+          <button class="elements__like-button" type="button" aria-label="нравится"></button>
+          <span class="elements__like-button-counter">345</span>
+        </div>
       </div>
     </li>
   </template>
 </body>
 
 </html>
-

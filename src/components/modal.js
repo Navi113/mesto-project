@@ -1,12 +1,13 @@
 // Функция открытия попапов
 function openPopup(popup) {
   popup.classList.add("popup_opened");
+  document.addEventListener('keydown', keyHandler);
 }
 
 // Функция закрытия попапов
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
-  document.querySelector('#form-add-img').reset();
+  document.removeEventListener('keydown', keyHandler);
 }
 
 // Функция закрытия попапа кликом на оверлей
@@ -26,9 +27,17 @@ function keyHandler(evt) {
   }
 }
 
-document.addEventListener('keydown', keyHandler);
+// Функция отображения загрузки на кнопке
+const renderFormLoading = (isLoading, submitButton) => {
+  if(isLoading) {
+    submitButton.textContent = 'Coхранение...'
+  } else {
+    submitButton.textContent = 'Сохранить'
+  }
+}
 
 export {
   openPopup,
-  closePopup
+  closePopup,
+  renderFormLoading
 }

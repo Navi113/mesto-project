@@ -4,15 +4,10 @@
   box-sizing: border-box;
   border: none;
   padding: 10px 0 8px 4px;
-  margin: 0 0 40px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   font-size: 14px;
   line-height: 17px;
   font-family: inherit;
-}
-
-.form__input:last-of-type {
-  margin: 0 0 48px;
 }
 
 .form__input:focus {
@@ -27,8 +22,3 @@
   }
 }
 
-@media screen and (max-width: 767px) {
-.form__input:last-of-type {
-  margin: 0 0 45px;
-}
-}
