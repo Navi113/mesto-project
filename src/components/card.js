@@ -9,17 +9,14 @@ import {
   popupImage,
   template,
   gallery,
+  deleteAddedCard,
   loadCard,
   user,
+  addLike,
 } from '../index.js';
 
-import {
-  deleteLike,
-  putLike
-} from './api';
-
 // Функция формирования карточки
-function createCard(card, isOwner, isLiked, displayLikes) {
+function createCard(card, isOwner) {
   const oneCard = template.querySelector('.elements__item').cloneNode(true); // копируем контейнер карточки со всем содержимым
   const cardName = oneCard.querySelector('.elements__title');
   const image = oneCard.querySelector('.elements__image');
@@ -28,33 +25,12 @@ function createCard(card, isOwner, isLiked, displayLikes) {
   const likeBtn = oneCard.querySelector('.elements__like-button');
 
   cardName.textContent = card.name;
-  counter.textContent = displayLikes;
   image.src = card.link;
   image.alt = card.name;
 
   // Показать иконку корзины на моей карточке
   if (!isOwner) {
     deleteBtn.classList.add('elements__delete-button_disabled');
-  }
-
-  // Удаление карточки
-  deleteBtn.addEventListener('click', (evt) => {
-    evt.target.closest('.elements__item').remove();
-    deleteAddedCard(card._id);
-  });
-
-  // Лайк карточки
-  likeBtn.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('elements__like-button_active')) {
-      deleteLike(card._id);
-    } else {
-      putLike(card._id);
-    }
-  });
-
-  // Показать мой лайк
-  if (isLiked) {
-    likeBtn.classList.add('elements__like-button_active');
   }
 
   // Попап картинки
@@ -64,6 +40,14 @@ function createCard(card, isOwner, isLiked, displayLikes) {
     popupItemTitle.alt = cardName.getAttribute('src');
     openPopup(popupImage);
   })
+  // Вызов функции удалить добавленную карчтоку
+  deleteAddedCard(deleteBtn, oneCard, card._id);
+
+  // Вызов функции показать лайки
+  displayLikes(counter, card);
+
+  // Добавить лайк
+  addLike(likeBtn, card._id, counter)
 
   return oneCard;
 }
@@ -73,19 +57,13 @@ function addNewCard(card) {
   gallery.prepend(createCard(card, true, false, 0));
 }
 
-function deleteAddedCard(id) {
-  fetch(`https://nomoreparties.co/v1/plus-cohort-14/cards/${id}`, {
-    method: 'DELETE',
-    headers: {
-      authorization: '36f58db1-954b-4ac9-895b-0b07efe7ba35',
-      'Content-Type': 'application/json'
-    }
-  })
+// Функция показать лайки
+function displayLikes(likeCounter, card) {
+  likeCounter.textContent = card.likes.length;
 }
-
-
 
 export {
   createCard,
   addNewCard,
+  displayLikes,
 };

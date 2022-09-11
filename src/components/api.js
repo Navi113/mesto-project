@@ -70,127 +70,29 @@ const addCard = (name, link) => {
     .then(checkResponse)
 }
 
-function deleteLike(id) {
-  fetch(`https://nomoreparties.co/v1/plus-cohort-14/cards/likes/${id}`, {
+const deleteLike = (id) => {
+  return fetch(`${config.baseURL}/cards/likes/${id}`, {
       method: 'DELETE',
       headers: config.headers,
     })
     .then(checkResponse)
 }
 
-function putLike(id) {
-  fetch(`https://nomoreparties.co/v1/plus-cohort-14/cards/likes/${id}`, {
+const putLike = (id) => {
+  return fetch(`${config.baseURL}/cards/likes/${id}`, {
       method: 'PUT',
       headers: config.headers,
     })
     .then(checkResponse)
 }
 
-// Запрос на удаление своей карточки
-// const delCard = (id) => {
-//   return fetch(`${config.baseURL}/cards/${id}`, {
-//       method: 'DELETE',
-//       headers: config.headers
-//     })
-//     .then(checkResponse)
-// }
-
-// const deleteCard = (id) => {
-//     fetch(`https://nomoreparties.co/v1/plus-cohort-14/cards/${id}`, {
-//         method: 'DELETE',
-//         headers: config.headers
-//       })
-//       .then(checkResponse)
-
-// Для себя (объект карточек в консоли)
-fetch(`${config.baseURL}/cards`, {
-    headers: config.headers
-  })
-  .then(checkResponse)
-  .then((data) => {
-    console.log(data);
-  })
-
-// Для себя (объект пользователя в консоли)
-fetch(`${config.baseURL}/users/me`, {
-    headers: config.headers
-  })
-  .then(checkResponse)
-  .then(data => console.log(data))
-// const like =
-
-// Проверка id пользователя
-// const isOwner = (owner) => {
-//   return fetch(`${config.baseURL}/cards`, {
-//       headers: config.headers,
-//       body: JSON.stringify({
-//         owner
-//       })
-//     })
-//     .then(checkResponse)
-// };
-
-// function getSmileIfTrue(isOwner) {
-//   if (userId.id == card.owner._id) {
-//     console.log(':-)');
-//   }
-// }
-
-// Функция проверки лайка
-// const isLiked = () => {
-
-// };
-
-// Фугкция счетчика лайков
-// const displayLikes = () => {
-
-// };
-
-// Получил с сервера JSON с массивом карточек --------------------------------------------------------------------
-// fetch(`${config.baseURL}/cards`, {
-//   headers: config.headers
-// })
-// .then(res => res.json())
-// .then((data) => {
-//   console.log(data); //объект
-//   console.log(data[0].owner); // владелец
-//   console.log(data[0].likes); // количество лайков
-//   console.log(data[0].owner._id); // id владельца
-// });
-
-// function getLikes(callback) {
-//   fetch('https://nomoreparties.co/v1/plus-cohort-12/cards', {
-//       headers: config.headers
-//     })
-//     .then((response) => {
-//       return response.json();
-//     })
-//     .then((data) => {
-//       callback(data);
-//     });
-// }
-
-// Функция получить лайки
-// const getLikes = (callback) => {
-//   return fetch(`${config.baseURL}/cards`, {
-//       headers: config.headers
-//     })
-//     .then((res) => {
-//       return res.json();
-//     })
-//     .then((data) => {
-//       callback(data);
-//     })
-//     .then(checkResponse)
-// };
-
-// const showLikes = (info) => {
-//   info.forEach((item) => console.log(item.likes))
-// }
-
-// //
-// getLikes(showLikes);
-
+const deleteCard = (id) => {
+  return fetch(`${config.baseURL}/cards/${id}`, {
+      method: 'DELETE',
+      headers: config.headers,
+    })
+    .then(checkResponse)
+}
 
 export {
   getUserData,
@@ -200,5 +102,6 @@ export {
   addCard,
   config,
   deleteLike,
-  putLike
+  putLike,
+  deleteCard
 }
