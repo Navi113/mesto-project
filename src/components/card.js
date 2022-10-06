@@ -15,6 +15,37 @@ import {
   addLike,
 } from '../index.js';
 
+
+
+class Card {
+  constructor(data, templateSelector, cardSelector){
+    this._data = data;
+    this._templateSelector = templateSelector;
+    this._cardSelector = cardSelector;
+  }
+
+  // метод получения шаблона
+  _getElement() {
+    const cardElement = document
+      .querySelector(this._templateSelector)
+      .content
+      .querySelector(this._cardSelector)
+      .cloneNode(true);
+
+    return cardElement;
+  }
+
+  _setEventListeners() {
+    this._element.querySelector(this._cardSelector).addEventListener('click', () => {
+
+    })
+  }
+}
+
+generate() {
+  this._element = super._getElement();
+}
+
 // Функция формирования карточки
 function createCard(card, isOwner) {
   const oneCard = template.querySelector('.elements__item').cloneNode(true); // копируем контейнер карточки со всем содержимым
@@ -61,6 +92,8 @@ function addNewCard(card) {
 function displayLikes(likeCounter, card) {
   likeCounter.textContent = card.likes.length;
 }
+
+
 
 export {
   createCard,

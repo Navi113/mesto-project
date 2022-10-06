@@ -13,7 +13,7 @@ import {
   createCard,
   addNewCard,
   displayLikes
-} from './components/card.js';
+} from './components/Card.js';
 
 import {
   openPopup,
@@ -61,7 +61,7 @@ const inputs = popupAddForm.querySelectorAll('.form__input');
 const submitBtn = popupAddForm.querySelector('.popup__save-button');
 
 // Шаблон
-const template = document.querySelector('#item-template').content;
+const template = document.querySelector('.card-template').content;
 const gallery = document.querySelector('.elements__list');
 
 // Попап картинки
