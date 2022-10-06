@@ -1,15 +1,13 @@
+import Api from './components/api.js';
 import './pages/index.css';
 
-import {
-  getUserData,
-  getInitialCards,
-  editUserData,
-  changeAvatar,
-  addCard,
-  deleteCard,
-  deleteLike,
-  putLike
-} from './components/api.js'
+const api = new Api({
+  baseURL: 'https://nomoreparties.co/v1/plus-cohort-14',
+  headers: {
+    authorization: '36f58db1-954b-4ac9-895b-0b07efe7ba35',
+    'Content-Type': 'application/json'
+  }
+})
 
 import {
   createCard,
@@ -107,7 +105,7 @@ enableValidation({
 });
 
 // Получение данных с сервера
-Promise.all([getUserData(), getInitialCards()])
+Promise.all([api.getUserData(), api.getInitialCards()])
   .then(([data, cards]) => {
     avatar.src = data.avatar;
     profileTitle.textContent = data.name;
@@ -134,7 +132,7 @@ const loadCard = (cards) => {
 function editProfileInfo(evt) {
   renderFormLoading(true, dotBtn, 'Сохранение...', 'Сохранить')
   evt.preventDefault();
-  editUserData(inputProfileName.value, inputProfileAbout.value)
+  api.editUserData(inputProfileName.value, inputProfileAbout.value)
     .then(res => {
       profileTitle.textContent = res.name;
       profileSubtitle.textContent = res.about;
@@ -152,7 +150,7 @@ function editProfileInfo(evt) {
 // Добавить карточку
 function submitCardForm() {
   renderFormLoading(true, submitBtn, 'Создание...', 'Создать');
-  addCard(inputAddName.value, inputAddLink.value)
+  api.addCard(inputAddName.value, inputAddLink.value)
     .then((res) => {
       addNewCard(res);
       closePopup(popupAddCard);
@@ -173,7 +171,7 @@ popupAddForm.addEventListener('submit', submitCardForm);
 function handleProfileAvatarSubmit(evt) {
   renderFormLoading(true, editAvatarDot, 'Сохранение...', 'Сохранить')
   evt.preventDefault();
-  changeAvatar(avatarLink.value)
+  api.changeAvatar(avatarLink.value)
     .then(() => {
       avatar.src = avatarLink.value;
       closePopup(avatarPopup);
@@ -190,7 +188,7 @@ function handleProfileAvatarSubmit(evt) {
 // Функция удалить добавленную карточку
 function deleteAddedCard(button, card, id) {
   button.addEventListener('click', () => {
-    deleteCard(id)
+    api.deleteCard(id)
       .then(() => {
         card.remove();
       })
@@ -204,7 +202,7 @@ function deleteAddedCard(button, card, id) {
 function addLike(button, cardId, likeCounter) {
   button.addEventListener('click', () => {
     if (button.classList.contains('elements__like-button_active')) {
-      deleteLike(cardId)
+      api.deleteLike(cardId)
         .then((res) => {
           button.classList.remove('elements__like-button_active');
           displayLikes(likeCounter, res);
@@ -213,7 +211,7 @@ function addLike(button, cardId, likeCounter) {
           console.log(err);
         })
     } else {
-      putLike(cardId)
+      api.putLike(cardId)
         .then((res) => {
           button.classList.add('elements__like-button_active');
           displayLikes(likeCounter, res);
