@@ -1,16 +1,18 @@
+import Api from './components/api.js';
 import './pages/index.css';
 
-import {
-  getUserData,
-  getInitialCards,
-  editUserData,
-  changeAvatar,
-  addCard,
-} from './components/api.js'
+const api = new Api({
+  baseURL: 'https://nomoreparties.co/v1/plus-cohort-14',
+  headers: {
+    authorization: '36f58db1-954b-4ac9-895b-0b07efe7ba35',
+    'Content-Type': 'application/json'
+  }
+})
 
 import {
   createCard,
   addNewCard,
+  displayLikes
 } from './components/card.js';
 
 import {
@@ -67,15 +69,6 @@ const popupImage = document.querySelector('.popup_image');
 const popupItemImage = popupImage.querySelector('.popup__image');
 const popupItemTitle = popupImage.querySelector('.popup__image-subtitle');
 
-// Функция отправки формы редактироания профиля
-function submitFormProfile(evt) {
-  evt.preventDefault();
-  profileTitle.textContent = inputProfileName.value;
-  profileSubtitle.textContent = inputProfileAbout.value;
-  closePopup(popupEditProfile);
-}
-
-
 // Слушатель на кнопку редактировать
 buttonEdit.addEventListener('click', function () {
   inputProfileName.value = profileTitle.textContent;
@@ -88,11 +81,6 @@ buttonAdd.addEventListener('click', function () {
   openPopup(popupAddCard);
   toggleButtonState(inputs, submitBtn);
 });
-
-// Слушатель на отправку формы редактировать профиль
-popupProfileForm.addEventListener('submit', submitFormProfile);
-
-
 
 // Закрытие всех попапов кликом на оверлей и кнопку закрыть
 const popups = document.querySelectorAll('.popup')
@@ -117,7 +105,7 @@ enableValidation({
 });
 
 // Получение данных с сервера
-Promise.all([getUserData(), getInitialCards()])
+Promise.all([api.getUserData(), api.getInitialCards()])
   .then(([data, cards]) => {
     avatar.src = data.avatar;
     profileTitle.textContent = data.name;
@@ -132,19 +120,19 @@ Promise.all([getUserData(), getInitialCards()])
 
 const loadCard = (cards) => {
   cards.forEach((card) => {
-    const displayLikes = card.likes.length; // количество лайков
+    // const displayLikes = card.likes.length; // количество лайков
     const isOwner = card.owner._id === user.id; // Определить владельца карты (true/false)
     const isLiked = card.likes.some(like => like._id === user.id) // если хотя бы один эл true, то выполняется
 
-    gallery.append(createCard(card, isOwner, isLiked, displayLikes));
+    gallery.append(createCard(card, isOwner, isLiked, /*displayLikes*/ ));
   })
 }
 
 // Обновить информацию в профиле
 function editProfileInfo(evt) {
-  renderFormLoading(true, dotBtn)
+  renderFormLoading(true, dotBtn, 'Сохранение...', 'Сохранить')
   evt.preventDefault();
-  editUserData(inputProfileName.value, inputProfileAbout.value)
+  api.editUserData(inputProfileName.value, inputProfileAbout.value)
     .then(res => {
       profileTitle.textContent = res.name;
       profileSubtitle.textContent = res.about;
@@ -155,47 +143,84 @@ function editProfileInfo(evt) {
       console.log(err.message)
     })
     .finally(() => {
-      renderFormLoading(false, dotBtn);
+      renderFormLoading(false, dotBtn, 'Сохранение...', 'Сохранить');
     })
 }
 
+// Добавить карточку
 function submitCardForm() {
-  renderFormLoading(true, submitBtn);
-  addCard(inputAddName.value, inputAddLink.value)
+  renderFormLoading(true, submitBtn, 'Создание...', 'Создать');
+  api.addCard(inputAddName.value, inputAddLink.value)
     .then((res) => {
       addNewCard(res);
       closePopup(popupAddCard);
-      inputAddName.value = "";
-      inputAddLink.value = "";
       popupAddForm.reset();
     })
     .catch((err) => {
       console.log(err.message)
     })
     .finally(() => {
-      renderFormLoading(false, submitBtn);
+      renderFormLoading(false, submitBtn, 'Создание...', 'Создать');
     })
 }
 
 // Слушатель на отправку формы добавление картинки
 popupAddForm.addEventListener('submit', submitCardForm);
 
-// Функция
+// Функция добавления аватара
 function handleProfileAvatarSubmit(evt) {
-  renderFormLoading(true, editAvatarDot)
+  renderFormLoading(true, editAvatarDot, 'Сохранение...', 'Сохранить')
   evt.preventDefault();
-  changeAvatar(avatarLink.value)
-    .then(res => {
-      console.log(res)
+  api.changeAvatar(avatarLink.value)
+    .then(() => {
       avatar.src = avatarLink.value;
-      closePopup(avatarPopup)
+      closePopup(avatarPopup);
+      profileAvatarForm.reset();
     })
     .catch((err) => {
       console.log(err.message)
     })
     .finally(() => {
-      renderFormLoading(false, editAvatarDot);
+      renderFormLoading(false, editAvatarDot, 'Сохранение...', 'Сохранить');
     })
+}
+
+// Функция удалить добавленную карточку
+function deleteAddedCard(button, card, id) {
+  button.addEventListener('click', () => {
+    api.deleteCard(id)
+      .then(() => {
+        card.remove();
+      })
+      .catch((err) => {
+        console.log(err.message);
+      })
+  });
+}
+
+// Функция добавление лайка
+function addLike(button, cardId, likeCounter) {
+  button.addEventListener('click', () => {
+    if (button.classList.contains('elements__like-button_active')) {
+      api.deleteLike(cardId)
+        .then((res) => {
+          button.classList.remove('elements__like-button_active');
+          displayLikes(likeCounter, res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    } else {
+      api.putLike(cardId)
+        .then((res) => {
+          button.classList.add('elements__like-button_active');
+          displayLikes(likeCounter, res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+  })
 }
 
 // Слушатель на кнопку редактировать аватар
@@ -207,6 +232,7 @@ editAvatarButton.addEventListener("click", function () {
 // Слушатель на отправку формы аватара
 profileAvatarForm.addEventListener("submit", handleProfileAvatarSubmit)
 
+// Слушатель на отправку формы редактирования данных пользователя
 popupProfileForm.addEventListener("submit", editProfileInfo);
 
 export {
@@ -217,4 +243,6 @@ export {
   popupItemTitle,
   loadCard,
   user,
+  deleteAddedCard,
+  addLike,
 };

@@ -12,3 +12,4 @@
 
  * [Ссылка на проект в GitHub Pages](https://navi113.github.io/mesto-project/)
 
+* [Ссылка на проект в GitHub Pages](https://navi113.github.io/mesto-project/) 

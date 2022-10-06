@@ -17,8 +17,6 @@ function clickOver(evt) {
   }
 }
 
-document.addEventListener('click', clickOver);
-
 // Функция закрытия попапа нажатием на Esc
 function keyHandler(evt) {
   if (evt.key === "Escape") {
@@ -28,11 +26,11 @@ function keyHandler(evt) {
 }
 
 // Функция отображения загрузки на кнопке
-const renderFormLoading = (isLoading, submitButton) => {
-  if(isLoading) {
-    submitButton.textContent = 'Coхранение...'
+const renderFormLoading = (isLoading, submitButton, saving, save) => {
+  if (isLoading) {
+    submitButton.textContent = saving;
   } else {
-    submitButton.textContent = 'Сохранить'
+    submitButton.textContent = save;
   }
 }
 
