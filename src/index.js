@@ -1,5 +1,7 @@
 import Api from './components/api.js';
 import './pages/index.css';
+import Card from './components/Card.js';
+import Section from './components/Section.js';
 
 const api = new Api({
   baseURL: 'https://nomoreparties.co/v1/plus-cohort-14',
@@ -118,13 +120,45 @@ Promise.all([api.getUserData(), api.getInitialCards()])
   });
 
 
+const card1 = {
+  "likes": [
+      {
+          "name": "Петя Серый",
+          "about": "Исследователь твоего очка",
+          "avatar": "https://shotkit.com/wp-content/uploads/2020/08/night-landscape-photography-featured.jpg",
+          "_id": "e084eac150c6f2e49b728d50",
+          "cohort": "plus-cohort-14"
+      }
+  ],
+  "_id": "634061b1cd8a7b09dd7185bb",
+  "name": "Очко",
+  "link": "https://shotkit.com/wp-content/uploads/2020/08/night-landscape-photography-featured.jpg",
+  "owner": {
+      "name": "Willem Alexandr8",
+      "about": "Исследователь библиотек и книжных8",
+      "avatar": "https://shotkit.com/wp-content/uploads/2020/08/night-landscape-photography-featured.jpg",
+      "_id": "e084eac150c6f2e49b728d50",
+      "cohort": "plus-cohort-14"
+  },
+  "createdAt": "2022-10-07T17:28:17.998Z"
+}
+
+//const card = new Card(card1, '.card-template');
+//gallery.append(card.generate())
+//console.log(card.generate())
+
+
+
+
 const loadCard = (cards) => {
   cards.forEach((card) => {
+    const cartochka = new Card(card, '.card-template')
+    console.log(cartochka.generate())
     // const displayLikes = card.likes.length; // количество лайков
-    const isOwner = card.owner._id === user.id; // Определить владельца карты (true/false)
-    const isLiked = card.likes.some(like => like._id === user.id) // если хотя бы один эл true, то выполняется
-
-    gallery.append(createCard(card, isOwner, isLiked, /*displayLikes*/ ));
+    //const isOwner = card.owner._id === user.id; // Определить владельца карты (true/false)
+    //const isLiked = card.likes.some(like => like._id === user.id) // если хотя бы один эл true, то выполняется
+    //gallery.append(createCard(card, isOwner, isLiked, /*displayLikes*/ ));
+    gallery.append(cartochka.generate())
   })
 }
 

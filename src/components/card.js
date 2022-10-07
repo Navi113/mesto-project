@@ -15,35 +15,41 @@ import {
   addLike,
 } from '../index.js';
 
-
-
-class Card {
-  constructor(data, templateSelector, cardSelector){
+export default class Card {
+  constructor(data, templateSelector, ownerId){
     this._data = data;
     this._templateSelector = templateSelector;
-    this._cardSelector = cardSelector;
+    this._ownerId = ownerId;
+
   }
 
-  // метод получения шаблона
+  // метод получения DOM элемента
   _getElement() {
     const cardElement = document
       .querySelector(this._templateSelector)
       .content
-      .querySelector(this._cardSelector)
+      .querySelector('.elements__item')
       .cloneNode(true);
 
     return cardElement;
   }
+  // метод вешания слушателей на карточку
+  // _setEventListeners() {
+  //   this._element.querySelector(this._cardSelector).addEventListener('click', () => {
 
-  _setEventListeners() {
-    this._element.querySelector(this._cardSelector).addEventListener('click', () => {
+  //   })
+  // }
 
-    })
+  // Метод создания карточки
+  generate(){
+    this._element = this._getElement();
+    this._element.querySelector('.elements__image').src = this._data.link;
+    this._element.querySelector('.elements__image').alt = this._data.name;
+    this._element.querySelector('.elements__title').textContent = this._data.name;
+    this._element.querySelector('.elements__like-button-counter').textContent = this._data.likes.length;
+
+    return this._element
   }
-}
-
-generate() {
-  this._element = super._getElement();
 }
 
 // Функция формирования карточки
