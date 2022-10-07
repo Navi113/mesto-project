@@ -16,10 +16,13 @@ import {
 } from '../index.js';
 
 export default class Card {
-  constructor(data, templateSelector, ownerId){
+  constructor(data, templateSelector, ownerId, userId, ) {
     this._data = data;
     this._templateSelector = templateSelector;
     this._ownerId = ownerId;
+    this._userId = userId;
+
+
 
   }
 
@@ -40,16 +43,27 @@ export default class Card {
   //   })
   // }
 
+
   // Метод создания карточки
-  generate(){
+  generate() {
     this._element = this._getElement();
     this._element.querySelector('.elements__image').src = this._data.link;
     this._element.querySelector('.elements__image').alt = this._data.name;
     this._element.querySelector('.elements__title').textContent = this._data.name;
     this._element.querySelector('.elements__like-button-counter').textContent = this._data.likes.length;
+    this._deleteBtn = this._element.querySelector('.elements__delete-button')
+    if (this._ownerId !== this._userId.id) {
+      this._deleteBtn.classList.add('elements__delete-button_disabled');
+      // if (!isOwner) {
+      //   deleteBtn.classList.add('elements__delete-button_disabled');
+      // }
+      console.log(122)
+    }
+
 
     return this._element
   }
+
 }
 
 // Функция формирования карточки
