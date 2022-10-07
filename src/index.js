@@ -150,7 +150,14 @@ const card1 = {
 
 
 
-   //gallery.append(createCard(card, isOwner, isLiked, /*displayLikes*/ ));
+const loadCard = (cards) => {
+  cards.forEach((card) => {
+    const cartochka = new Card(card, '.card-template')
+    console.log(cartochka.generate())
+    // const displayLikes = card.likes.length; // количество лайков
+    //const isOwner = card.owner._id === user.id; // Определить владельца карты (true/false)
+    //const isLiked = card.likes.some(like => like._id === user.id) // если хотя бы один эл true, то выполняется
+    //gallery.append(createCard(card, isOwner, isLiked, /*displayLikes*/ ));
     gallery.append(cartochka.generate())
   })
 }
