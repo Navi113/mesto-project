@@ -9,10 +9,8 @@ import {
   popupImage,
   template,
   gallery,
-  //deleteAddedCard,
   loadCard,
   user,
-  addLike,
 } from '../index.js';
 
 export default class Card {
@@ -23,6 +21,7 @@ export default class Card {
     this._userId = userId;
     this._cardId = cardId;
     this._api = api;
+    this._cardLikes = data.likes;
   }
 
   // Метод получения DOM элемента
@@ -77,24 +76,6 @@ export default class Card {
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   // Метод удаления карточки
   _deleteCard() {
     this._api.deleteCard(this._cardId)
@@ -120,6 +101,10 @@ export default class Card {
       this._deleteBtn.classList.add('elements__delete-button_disabled');
     }
 
+    if (this._cardLikes.some(like => like._id === user.id)) {
+      this._likeBtn.classList.add('elements__like-button_active');
+    }
+
     this._setEventListeners();
 
     return this._element
@@ -133,8 +118,6 @@ function createCard(card, isOwner) {
   const cardName = oneCard.querySelector('.elements__title');
   const image = oneCard.querySelector('.elements__image');
   const deleteBtn = oneCard.querySelector('.elements__delete-button');
-  const counter = oneCard.querySelector('.elements__like-button-counter'); // счетчик лайков
-  const likeBtn = oneCard.querySelector('.elements__like-button');
 
   cardName.textContent = card.name;
   image.src = card.link;
@@ -152,14 +135,6 @@ function createCard(card, isOwner) {
     popupItemTitle.alt = cardName.getAttribute('src');
     openPopup(popupImage);
   })
-  // Вызов функции удалить добавленную карчтоку
-  //deleteAddedCard(deleteBtn, oneCard, card._id);
-
-  // Вызов функции показать лайки
-  displayLikes(counter, card);
-
-  // Добавить лайк
-  addLike(likeBtn, card._id, counter)
 
   return oneCard;
 }
@@ -177,5 +152,4 @@ function displayLikes(likeCounter, card) {
 export {
   createCard,
   addNewCard,
-  displayLikes,
 };

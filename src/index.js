@@ -1,6 +1,6 @@
-import Api from './components/api.js';
+import Api from './components/Api.js';
 import './pages/index.css';
-import Card from './components/card.js';
+import Card from './components/Card.js';
 import Section from './components/Section.js';
 
 export const api = new Api({
@@ -12,10 +12,8 @@ export const api = new Api({
 })
 
 import {
-  createCard,
   addNewCard,
-  displayLikes
-} from './components/card.js';
+} from './components/Card.js';
 
 import {
   openPopup,
@@ -107,33 +105,6 @@ enableValidation({
 });
 
 
-
-// const card1 = {
-//   "likes": [{
-//     "name": "Петя Серый",
-//     "about": "Исследователь твоего очка",
-//     "avatar": "https://shotkit.com/wp-content/uploads/2020/08/night-landscape-photography-featured.jpg",
-//     "_id": "e084eac150c6f2e49b728d50",
-//     "cohort": "plus-cohort-14"
-//   }],
-//   "_id": "634061b1cd8a7b09dd7185bb",
-//   "name": "Очко",
-//   "link": "https://shotkit.com/wp-content/uploads/2020/08/night-landscape-photography-featured.jpg",
-//   "owner": {
-//     "name": "Willem Alexandr8",
-//     "about": "Исследователь библиотек и книжных8",
-//     "avatar": "https://shotkit.com/wp-content/uploads/2020/08/night-landscape-photography-featured.jpg",
-//     "_id": "e084eac150c6f2e49b728d50",
-//     "cohort": "plus-cohort-14"
-//   },
-//   "createdAt": "2022-10-07T17:28:17.998Z"
-// }
-
-//const card = new Card(card1, '.card-template');
-//gallery.append(card.generate())
-//console.log(card.generate())
-
-
 // Получение данных с сервера
 Promise.all([api.getUserData(), api.getInitialCards()])
   .then(([data, cards]) => {
@@ -151,8 +122,6 @@ Promise.all([api.getUserData(), api.getInitialCards()])
 const loadCard = (cards) => {
   cards.forEach((card) => {
     const cartochka = new Card(card, '.card-template', card.owner._id, user, card._id, api, )
-    //const isLiked = card.likes.some(like => like._id === user.id) // если хотя бы один эл true, то выполняется
-    //gallery.append(createCard(card, isOwner, isLiked, /*displayLikes*/ ));
     gallery.append(cartochka.generate())
   })
 }
@@ -214,44 +183,6 @@ function handleProfileAvatarSubmit(evt) {
     })
 }
 
-// //Функция удалить добавленную карточку
-// function deleteAddedCard(button, card, id) {
-//   button.addEventListener('click', () => {
-//     api.deleteCard(id)
-//       .then(() => {
-//         card.remove();
-//       })
-//       .catch((err) => {
-//         console.log(err.message);
-//       })
-//   });
-// }
-
-
-function addLike(button, cardId, likeCounter) {
-  button.addEventListener('click', () => {
-    if (button.classList.contains('elements__like-button_active')) {
-      api.deleteLike(cardId)
-        .then((res) => {
-          button.classList.remove('elements__like-button_active');
-          displayLikes(likeCounter, res);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    } else {
-      api.putLike(cardId)
-        .then((res) => {
-          button.classList.add('elements__like-button_active');
-          displayLikes(likeCounter, res);
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-    }
-  })
-}
-
 // Слушатель на кнопку редактировать аватар
 editAvatarButton.addEventListener("click", function () {
   openPopup(avatarPopup);
@@ -272,6 +203,4 @@ export {
   popupItemTitle,
   loadCard,
   user,
-  //deleteAddedCard,
-  addLike,
 };
