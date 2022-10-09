@@ -150,8 +150,7 @@ Promise.all([api.getUserData(), api.getInitialCards()])
 
 const loadCard = (cards) => {
   cards.forEach((card) => {
-    const cartochka = new Card(card, '.card-template', card.owner._id, user, card._id)
-    // const displayLikes = card.likes.length; // количество лайков
+    const cartochka = new Card(card, '.card-template', card.owner._id, user, card._id, api, )
     //const isLiked = card.likes.some(like => like._id === user.id) // если хотя бы один эл true, то выполняется
     //gallery.append(createCard(card, isOwner, isLiked, /*displayLikes*/ ));
     gallery.append(cartochka.generate())
@@ -215,20 +214,20 @@ function handleProfileAvatarSubmit(evt) {
     })
 }
 
-//Функция удалить добавленную карточку
-function deleteAddedCard(button, card, id) {
-  button.addEventListener('click', () => {
-    api.deleteCard(id)
-      .then(() => {
-        card.remove();
-      })
-      .catch((err) => {
-        console.log(err.message);
-      })
-  });
-}
+// //Функция удалить добавленную карточку
+// function deleteAddedCard(button, card, id) {
+//   button.addEventListener('click', () => {
+//     api.deleteCard(id)
+//       .then(() => {
+//         card.remove();
+//       })
+//       .catch((err) => {
+//         console.log(err.message);
+//       })
+//   });
+// }
 
-// Функция добавление лайка
+
 function addLike(button, cardId, likeCounter) {
   button.addEventListener('click', () => {
     if (button.classList.contains('elements__like-button_active')) {
@@ -273,6 +272,6 @@ export {
   popupItemTitle,
   loadCard,
   user,
-  deleteAddedCard,
+  //deleteAddedCard,
   addLike,
 };

@@ -9,24 +9,23 @@ import {
   popupImage,
   template,
   gallery,
-  deleteAddedCard,
+  //deleteAddedCard,
   loadCard,
   user,
   addLike,
 } from '../index.js';
 
 export default class Card {
-  constructor(data, templateSelector, ownerId, userId, cardId) {
+  constructor(data, templateSelector, ownerId, userId, cardId, api) {
     this._data = data;
     this._templateSelector = templateSelector;
     this._ownerId = ownerId;
     this._userId = userId;
     this._cardId = cardId;
-
-
+    this._api = api;
   }
 
-  // метод получения DOM элемента
+  // Метод получения DOM элемента
   _getElement() {
     const cardElement = document
       .querySelector(this._templateSelector)
@@ -37,10 +36,75 @@ export default class Card {
     return cardElement;
   }
 
-  // метод вешания слушателей на карточку
+  // Метод вешания слушателей на карточку
+  _setEventListeners() {
+    // Слушатель на кнопку удалить
+    this._deleteBtn.addEventListener('click', () => {
+      this._deleteCard();
+    })
+
+    // Слушатель на кнопку лайка
+    this._likeBtn.addEventListener('click', () => {
+      this._addLike()
+    })
+  }
+  // Метод счетчик лайков
+  _displayLikes(res) {
+    this._likeCounter.textContent = res.likes.length;
+  }
+
+  // Метод добавить лайк
+  _addLike() {
+    if (this._likeBtn.classList.contains('elements__like-button_active')) {
+      this._api.deleteLike(this._cardId)
+        .then((res) => {
+          this._likeBtn.classList.remove('elements__like-button_active');
+          this._displayLikes(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    } else {
+      this._api.putLike(this._cardId)
+        .then((res) => {
+          this._likeBtn.classList.add('elements__like-button_active');
+          this._displayLikes(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   // Метод удаления карточки
+  _deleteCard() {
+    this._api.deleteCard(this._cardId)
+      .then(() => {
+        this._element.remove();
+      })
+      .catch((err) => {
+        console.log(err.message);
+      })
+  }
 
   // Метод создания карточки
   generate() {
@@ -49,24 +113,19 @@ export default class Card {
     this._element.querySelector('.elements__image').alt = this._data.name;
     this._element.querySelector('.elements__title').textContent = this._data.name;
     this._element.querySelector('.elements__like-button-counter').textContent = this._data.likes.length;
-    this._cardId
-    this._deleteBtn = this._element.querySelector('.elements__delete-button')
-    this._deleteBtn.addEventListener('click', deleteAddedCard(this._deleteBtn, this._element, this._cardId))
+    this._deleteBtn = this._element.querySelector('.elements__delete-button');
+    this._likeBtn = this._element.querySelector('.elements__like-button');
+    this._likeCounter = this._element.querySelector('.elements__like-button-counter')
     if (this._ownerId !== this._userId.id) {
       this._deleteBtn.classList.add('elements__delete-button_disabled');
-      // if (!isOwner) {
-      //   deleteBtn.classList.add('elements__delete-button_disabled');
-      // }
     }
 
+    this._setEventListeners();
 
     return this._element
   }
 
 }
-
-
-
 
 // Функция формирования карточки
 function createCard(card, isOwner) {
@@ -94,7 +153,7 @@ function createCard(card, isOwner) {
     openPopup(popupImage);
   })
   // Вызов функции удалить добавленную карчтоку
-  deleteAddedCard(deleteBtn, oneCard, card._id);
+  //deleteAddedCard(deleteBtn, oneCard, card._id);
 
   // Вызов функции показать лайки
   displayLikes(counter, card);
@@ -114,8 +173,6 @@ function addNewCard(card) {
 function displayLikes(likeCounter, card) {
   likeCounter.textContent = card.likes.length;
 }
-
-
 
 export {
   createCard,
