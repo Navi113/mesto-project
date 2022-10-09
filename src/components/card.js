@@ -16,12 +16,12 @@ import {
 } from '../index.js';
 
 export default class Card {
-  constructor(data, templateSelector, ownerId, userId, ) {
+  constructor(data, templateSelector, ownerId, userId, cardId) {
     this._data = data;
     this._templateSelector = templateSelector;
     this._ownerId = ownerId;
     this._userId = userId;
-
+    this._cardId = cardId;
 
 
   }
@@ -36,13 +36,11 @@ export default class Card {
 
     return cardElement;
   }
+
   // метод вешания слушателей на карточку
-  // _setEventListeners() {
-  //   this._element.querySelector(this._cardSelector).addEventListener('click', () => {
 
-  //   })
-  // }
 
+  // Метод удаления карточки
 
   // Метод создания карточки
   generate() {
@@ -51,13 +49,14 @@ export default class Card {
     this._element.querySelector('.elements__image').alt = this._data.name;
     this._element.querySelector('.elements__title').textContent = this._data.name;
     this._element.querySelector('.elements__like-button-counter').textContent = this._data.likes.length;
+    this._cardId
     this._deleteBtn = this._element.querySelector('.elements__delete-button')
+    this._deleteBtn.addEventListener('click', deleteAddedCard(this._deleteBtn, this._element, this._cardId))
     if (this._ownerId !== this._userId.id) {
       this._deleteBtn.classList.add('elements__delete-button_disabled');
       // if (!isOwner) {
       //   deleteBtn.classList.add('elements__delete-button_disabled');
       // }
-      console.log(122)
     }
 
 
@@ -65,6 +64,9 @@ export default class Card {
   }
 
 }
+
+
+
 
 // Функция формирования карточки
 function createCard(card, isOwner) {

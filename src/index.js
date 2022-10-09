@@ -1,9 +1,9 @@
 import Api from './components/api.js';
 import './pages/index.css';
-import Card from './components/Card.js';
+import Card from './components/card.js';
 import Section from './components/Section.js';
 
-const api = new Api({
+export const api = new Api({
   baseURL: 'https://nomoreparties.co/v1/plus-cohort-14',
   headers: {
     authorization: '36f58db1-954b-4ac9-895b-0b07efe7ba35',
@@ -15,7 +15,7 @@ import {
   createCard,
   addNewCard,
   displayLikes
-} from './components/Card.js';
+} from './components/card.js';
 
 import {
   openPopup,
@@ -150,7 +150,7 @@ Promise.all([api.getUserData(), api.getInitialCards()])
 
 const loadCard = (cards) => {
   cards.forEach((card) => {
-    const cartochka = new Card(card, '.card-template', card.owner._id, user, true)
+    const cartochka = new Card(card, '.card-template', card.owner._id, user, card._id)
     // const displayLikes = card.likes.length; // количество лайков
     //const isLiked = card.likes.some(like => like._id === user.id) // если хотя бы один эл true, то выполняется
     //gallery.append(createCard(card, isOwner, isLiked, /*displayLikes*/ ));
@@ -215,7 +215,7 @@ function handleProfileAvatarSubmit(evt) {
     })
 }
 
-// Функция удалить добавленную карточку
+//Функция удалить добавленную карточку
 function deleteAddedCard(button, card, id) {
   button.addEventListener('click', () => {
     api.deleteCard(id)
