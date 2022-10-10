@@ -3,6 +3,8 @@ import './pages/index.css';
 import Card from './components/Card.js';
 import FormValidator from './components/FormValidator.js';
 import Section from './components/Section.js';
+import PopupWithImage from './components/PopupWithImage.js';
+import UserInfo from './components/UserInfo.js';
 
 export const api = new Api({
   baseURL: 'https://nomoreparties.co/v1/plus-cohort-14',
@@ -27,14 +29,14 @@ import {
   toggleButtonState,
 } from './components/validate.js';
 
-import { config } from './utils/constants.js';
+import { config, profileTitle, profileSubtitle, avatar } from './utils/constants.js';
 
 // Сервер
 export let userId = '';
 
 
 // Аватар
-const avatar = document.querySelector('.profile__avatar');
+// const avatar = document.querySelector('.profile__avatar');
 const editAvatarButton = document.querySelector(".profile__edit-avatar");
 const avatarPopup = document.querySelector("#popup-edit-avatar");
 const avatarLink = document.querySelector('#form-avatar-input-url');
@@ -45,8 +47,8 @@ const dotBtn = document.querySelector('#popup-save-btn');
 
 // Профиль
 const buttonEdit = document.querySelector('.profile__edit-button');
-const profileTitle = document.querySelector('.profile__title');
-const profileSubtitle = document.querySelector('.profile__subtitle');
+// const profileTitle = document.querySelector('.profile__title');
+// const profileSubtitle = document.querySelector('.profile__subtitle');
 const popupEditProfile = document.querySelector('#popup-edit-profile');
 const popupProfileForm = popupEditProfile.querySelector('#form-edit-profile');
 const inputProfileName = popupProfileForm.querySelector('#form-input-name');
@@ -118,10 +120,11 @@ enableNewCardValidate.enableValidation();
 // Получение данных с сервера
 Promise.all([api.getUserData(), api.getInitialCards()])
   .then(([data, cards]) => {
-    avatar.src = data.avatar;
-    profileTitle.textContent = data.name;
-    profileSubtitle.textContent = data.about;
+    // avatar.src = data.avatar;
+    // profileTitle.textContent = data.name;
+    // profileSubtitle.textContent = data.about;
     userId = data._id;
+    userInfo.setUserInfo(data);
     cardList.renderItems(cards);
     // loadCard(cards);
   })
@@ -129,12 +132,22 @@ Promise.all([api.getUserData(), api.getInitialCards()])
     console.log(err);
   });
 
+const userInfo = new UserInfo({ profileTitle, profileSubtitle, avatar });
+
+const imgPopupOpen = document.querySelector('.popup_image');
+
+const popupWithImage = new PopupWithImage(imgPopupOpen);
+  popupWithImage.setEventListeners();
+
 const createOneCard = (data) => {
   const card = new Card({
     data: data,
     templateSelector: '.card-template',
     api,
     userId,
+    handleCardClick: (data) => {
+      popupWithImage.open(data);
+    },
   });
 
   const cardElement = card.generate();

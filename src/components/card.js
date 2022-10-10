@@ -15,7 +15,7 @@ import {
 } from '../index.js';
 
   export default class Card {
-    constructor({ data, templateSelector,api, userId }) {
+    constructor({ data, templateSelector,api, userId, handleCardClick }) {
       this._data = data;
       this._templateSelector = templateSelector;
       this._ownerId = data.owner._id;
@@ -23,6 +23,7 @@ import {
       this._cardId = data._id;
       this._api = api;
       this._cardLikes = data.likes;
+      this._handleCardClick = handleCardClick;
     }
 
   // Метод получения DOM элемента
@@ -46,6 +47,10 @@ import {
     // Слушатель на кнопку лайка
     this._likeBtn.addEventListener('click', () => {
       this._addLike()
+    })
+
+    this._element.querySelector('.elements__image').addEventListener ('click', () => {
+      this._handleCardClick(this._data);
     })
   }
   // Метод счетчик лайков

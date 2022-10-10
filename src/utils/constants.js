@@ -1,7 +1,7 @@
 // Константы
 
 // Аватар
-const avatar = document.querySelector('.profile__avatar');
+export const avatar = document.querySelector('.profile__avatar');
 const editAvatarButton = document.querySelector(".profile__edit-avatar");
 const avatarPopup = document.querySelector("#popup-edit-avatar");
 const avatarLink = document.querySelector('#form-avatar-input-url');
@@ -11,9 +11,10 @@ const dotBtn = document.querySelector('#popup-save-btn');
 
 
 // Профиль
+
 const buttonEdit = document.querySelector('.profile__edit-button');
-const profileTitle = document.querySelector('.profile__title');
-const profileSubtitle = document.querySelector('.profile__subtitle');
+export const profileTitle = document.querySelector('.profile__title');
+export const profileSubtitle = document.querySelector('.profile__subtitle');
 const popupEditProfile = document.querySelector('#popup-edit-profile');
 const popupProfileForm = popupEditProfile.querySelector('#form-edit-profile');
 const inputProfileName = popupProfileForm.querySelector('#form-input-name');
