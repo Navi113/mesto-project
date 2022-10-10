@@ -3,21 +3,21 @@ export default class Api {
     this._baseURL = options.baseURL
     this._headers = options.headers
   }
-// Получение данных пользователя
+  // Получение данных пользователя
   getUserData() {
     return fetch(`${this._baseURL}/users/me`, {
         headers: this._headers
       })
       .then(this._checkResponse)
   }
-// Получение карточек с сервера
+  // Получение карточек с сервера
   getInitialCards() {
     return fetch(`${this._baseURL}/cards`, {
         headers: this._headers
       })
       .then(this._checkResponse)
   };
-// Редактирование данных пользователя
+  // Редактирование данных пользователя
   editUserData(name, about) {
     return fetch(`${this._baseURL}/users/me`, {
         method: 'PATCH',
@@ -29,18 +29,18 @@ export default class Api {
       })
       .then(this._checkResponse)
   }
-// Изменение аватара
+  // Изменение аватара
   changeAvatar(avatar) {
     return fetch(`${this._baseURL}/users/me/avatar`, {
         method: 'PATCH',
         headers: this._headers,
         body: JSON.stringify({
-          avatar
+          avatar: avatar
         })
       })
       .then(this._checkResponse)
   }
-// Добавление карточки
+  // Добавление карточки
   addCard(name, link) {
     return fetch(`${this._baseURL}/cards`, {
         method: 'POST',
@@ -52,7 +52,7 @@ export default class Api {
       })
       .then(this._checkResponse)
   }
-// Удаление карточки
+  // Удаление карточки
   deleteLike(id) {
     return fetch(`${this._baseURL}/cards/likes/${id}`, {
         method: 'DELETE',
@@ -60,7 +60,7 @@ export default class Api {
       })
       .then(this._checkResponse)
   }
-// Поставить лайк
+  // Поставить лайк
   putLike(id) {
     return fetch(`${this._baseURL}/cards/likes/${id}`, {
         method: 'PUT',
@@ -68,7 +68,7 @@ export default class Api {
       })
       .then(this._checkResponse)
   }
-// Удаление карточки
+  // Удаление карточки
   deleteCard(id) {
     return fetch(`${this._baseURL}/cards/${id}`, {
         method: 'DELETE',
@@ -76,7 +76,7 @@ export default class Api {
       })
       .then(this._checkResponse)
   }
-// Проверка
+  // Проверка
   _checkResponse(res) {
     if (res.ok) {
       return res.json();
