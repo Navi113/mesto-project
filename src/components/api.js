@@ -1,107 +1,86 @@
-// Конфиг для дальнейшей удобной вставки
-const config = {
-  baseURL: 'https://nomoreparties.co/v1/plus-cohort-14',
-  headers: {
-    authorization: '36f58db1-954b-4ac9-895b-0b07efe7ba35',
-    'Content-Type': 'application/json'
+export default class Api {
+  constructor(options) {
+    this._baseURL = options.baseURL
+    this._headers = options.headers
   }
-}
-
-// Функция проверки ответа от сервера
-function checkResponse(res) {
-  if (res.ok) {
-    return res.json();
+  // Получение данных пользователя
+  getUserData() {
+    return fetch(`${this._baseURL}/users/me`, {
+        headers: this._headers
+      })
+      .then(this._checkResponse)
   }
-  return Promise.reject(`❗️❗️❗️ Тем временем на барабане ошибка: ${res.status} ${res.statusText}`)
-}
-
-
-// // Функция для получения информации о пользователе с сервера
-const getUserData = () => {
-  return fetch(`${config.baseURL}/users/me`, {
-      headers: config.headers
-    })
-    .then(checkResponse)
-};
-
-// Функция получения начальных карточек
-const getInitialCards = () => {
-  return fetch(`${config.baseURL}/cards`, {
-      headers: config.headers
-    })
-    .then(checkResponse)
-};
-
-// Функция редактирования информации (взятой с сервера) о пользователе в DOM
-const editUserData = (name, about) => {
-  return fetch(`${config.baseURL}/users/me`, {
-      method: 'PATCH',
-      headers: config.headers,
-      body: JSON.stringify({
-        name,
-        about
+  // Получение карточек с сервера
+  getInitialCards() {
+    return fetch(`${this._baseURL}/cards`, {
+        headers: this._headers
       })
-    })
-    .then(checkResponse)
-}
-
-// Загрузка нового аватара
-const changeAvatar = (avatar) => {
-  return fetch(`${config.baseURL}/users/me/avatar`, {
-      method: 'PATCH',
-      headers: config.headers,
-      body: JSON.stringify({
-        avatar
+      .then(this._checkResponse)
+  };
+  // Редактирование данных пользователя
+  editUserData(name, about) {
+    return fetch(`${this._baseURL}/users/me`, {
+        method: 'PATCH',
+        headers: this._headers,
+        body: JSON.stringify({
+          name,
+          about
+        })
       })
-    })
-    .then(res => checkResponse(res))
-}
-
-// Добавление новой карточки
-const addCard = (name, link) => {
-  return fetch(`${config.baseURL}/cards`, {
-      method: 'POST',
-      headers: config.headers,
-      body: JSON.stringify({
-        name,
-        link,
+      .then(this._checkResponse)
+  }
+  // Изменение аватара
+  changeAvatar(avatar) {
+    return fetch(`${this._baseURL}/users/me/avatar`, {
+        method: 'PATCH',
+        headers: this._headers,
+        body: JSON.stringify({
+          avatar: avatar
+        })
       })
-    })
-    .then(checkResponse)
-}
-
-const deleteLike = (id) => {
-  return fetch(`${config.baseURL}/cards/likes/${id}`, {
-      method: 'DELETE',
-      headers: config.headers,
-    })
-    .then(checkResponse)
-}
-
-const putLike = (id) => {
-  return fetch(`${config.baseURL}/cards/likes/${id}`, {
-      method: 'PUT',
-      headers: config.headers,
-    })
-    .then(checkResponse)
-}
-
-const deleteCard = (id) => {
-  return fetch(`${config.baseURL}/cards/${id}`, {
-      method: 'DELETE',
-      headers: config.headers,
-    })
-    .then(checkResponse)
-}
-
-export {
-  getUserData,
-  getInitialCards,
-  editUserData,
-  changeAvatar,
-  addCard,
-  config,
-  deleteLike,
-  putLike,
-  deleteCard
+      .then(this._checkResponse)
+  }
+  // Добавление карточки
+  addCard(name, link) {
+    return fetch(`${this._baseURL}/cards`, {
+        method: 'POST',
+        headers: this._headers,
+        body: JSON.stringify({
+          name,
+          link,
+        })
+      })
+      .then(this._checkResponse)
+  }
+  // Удаление карточки
+  deleteLike(id) {
+    return fetch(`${this._baseURL}/cards/likes/${id}`, {
+        method: 'DELETE',
+        headers: this._headers,
+      })
+      .then(this._checkResponse)
+  }
+  // Поставить лайк
+  putLike(id) {
+    return fetch(`${this._baseURL}/cards/likes/${id}`, {
+        method: 'PUT',
+        headers: this._headers,
+      })
+      .then(this._checkResponse)
+  }
+  // Удаление карточки
+  deleteCard(id) {
+    return fetch(`${this._baseURL}/cards/${id}`, {
+        method: 'DELETE',
+        headers: this._headers,
+      })
+      .then(this._checkResponse)
+  }
+  // Проверка
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status} ${res.statusText}`)
+  }
 }
