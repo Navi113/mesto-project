@@ -1,6 +1,7 @@
 import Api from './components/Api.js';
 import './pages/index.css';
 import Card from './components/Card.js';
+import FormValidator from './components/FormValidator.js';
 import Section from './components/Section.js';
 
 export const api = new Api({
@@ -11,9 +12,9 @@ export const api = new Api({
   }
 })
 
-import {
-  addNewCard,
-} from './components/Card.js';
+// import {
+//   addNewCard,
+// } from './components/Card.js';
 
 import {
   openPopup,
@@ -26,10 +27,10 @@ import {
   toggleButtonState,
 } from './components/validate.js';
 
+import { config } from './utils/constants.js';
+
 // Сервер
-const user = {
-  id: '',
-};
+export let userId = '';
 
 
 // Аватар
@@ -79,7 +80,6 @@ buttonEdit.addEventListener('click', function () {
 // Слушатель на кнопку добавить
 buttonAdd.addEventListener('click', function () {
   openPopup(popupAddCard);
-  toggleButtonState(inputs, submitBtn);
 });
 
 // Закрытие всех попапов кликом на оверлей и кнопку закрыть
@@ -96,13 +96,23 @@ popups.forEach((popup) => {
 })
 
 // Вызов функции проверки форм на валидность (объект с параметрами в качестве аргумента)
-enableValidation({
-  formSelector: '.form',
-  inputSelector: '.form__input',
-  submitButtonSelector: '.popup__save-button',
-  inputErrorClass: 'form__input_type_error',
-  errorClass: 'form__input-error_active'
-});
+// enableValidation({
+//   formSelector: '.form',
+//   inputSelector: '.form__input',
+//   submitButtonSelector: '.popup__save-button',
+//   inputErrorClass: 'form__input_type_error',
+//   errorClass: 'form__input-error_active'
+// });
+
+// Вызов функции проверки форм на валидность (объект с параметрами в качестве аргумента)
+
+const enableUserValidate = new FormValidator(config, popupProfileForm);
+const enableAvatarValidate = new FormValidator(config, profileAvatarForm);
+const enableNewCardValidate = new FormValidator(config, popupAddForm);
+
+enableUserValidate.enableValidation();
+enableAvatarValidate.enableValidation();
+enableNewCardValidate.enableValidation();
 
 
 // Получение данных с сервера
@@ -111,20 +121,38 @@ Promise.all([api.getUserData(), api.getInitialCards()])
     avatar.src = data.avatar;
     profileTitle.textContent = data.name;
     profileSubtitle.textContent = data.about;
-    user.id = data._id;
-    loadCard(cards);
+    userId = data._id;
+    cardList.renderItems(cards);
+    // loadCard(cards);
   })
   .catch(err => {
     console.log(err);
   });
 
+const createOneCard = (data) => {
+  const card = new Card({
+    data: data,
+    templateSelector: '.card-template',
+    api,
+    userId,
+  });
 
-const loadCard = (cards) => {
-  cards.forEach((card) => {
-    const cartochka = new Card(card, '.card-template', card.owner._id, user, card._id, api, )
-    gallery.append(cartochka.generate())
-  })
+  const cardElement = card.generate();
+  return cardElement;
 }
+
+const cardList = new Section({
+  renderer: (data) => {
+    cardList.setItem(createOneCard(data));
+  }
+}, gallery);
+
+// const loadCard = (cards) => {
+//   cards.forEach((card) => {
+//     const cartochka = new Card(card, '.card-template', api, user.id)
+//     gallery.append(cartochka.generate())
+//   })
+// }
 
 // Обновить информацию в профиле
 function editProfileInfo(evt) {
@@ -150,7 +178,7 @@ function submitCardForm() {
   renderFormLoading(true, submitBtn, 'Создание...', 'Создать');
   api.addCard(inputAddName.value, inputAddLink.value)
     .then((res) => {
-      addNewCard(res);
+      //addNewCard(res);
       closePopup(popupAddCard);
       popupAddForm.reset();
     })
@@ -201,6 +229,6 @@ export {
   popupImage,
   popupItemImage,
   popupItemTitle,
-  loadCard,
-  user,
+  // loadCard,
+  // user,
 };

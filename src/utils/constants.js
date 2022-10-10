@@ -37,3 +37,11 @@ const popupImage = document.querySelector('.popup_image');
 const popupItemImage = popupImage.querySelector('.popup__image');
 const popupItemTitle = popupImage.querySelector('.popup__image-subtitle');
 
+// Валидация
+export const config = {
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.popup__save-button',
+  inputErrorClass: 'form__input_type_error',
+  errorClass: 'form__input-error_active'
+};
