@@ -1,30 +1,24 @@
 import {
-  closePopup,
-  openPopup
-} from './modal.js';
-
-import {
-  popupItemImage,
-  popupItemTitle,
-  popupImage,
-  template,
-  gallery,
-  loadCard,
-  user,
   userId
 } from '../index.js';
 
-  export default class Card {
-    constructor({ data, templateSelector,api, userId, handleCardClick }) {
-      this._data = data;
-      this._templateSelector = templateSelector;
-      this._ownerId = data.owner._id;
-      this._userId = userId;
-      this._cardId = data._id;
-      this._api = api;
-      this._cardLikes = data.likes;
-      this._handleCardClick = handleCardClick;
-    }
+export default class Card {
+  constructor({
+    data,
+    templateSelector,
+    api,
+    userId,
+    handleCardClick
+  }) {
+    this._data = data;
+    this._templateSelector = templateSelector;
+    this._ownerId = data.owner._id;
+    this._userId = userId;
+    this._cardId = data._id;
+    this._api = api;
+    this._cardLikes = data.likes;
+    this._handleCardClick = handleCardClick;
+  }
 
   // Метод получения DOM элемента
   _getElement() {
@@ -49,7 +43,7 @@ import {
       this._addLike()
     })
 
-    this._element.querySelector('.elements__image').addEventListener ('click', () => {
+    this._element.querySelector('.elements__image').addEventListener('click', () => {
       this._handleCardClick(this._data);
     })
   }
@@ -118,45 +112,3 @@ import {
   }
 
 }
-
-// Функция формирования карточки
-// function createCard(card, isOwner) {
-//   const oneCard = template.querySelector('.elements__item').cloneNode(true); // копируем контейнер карточки со всем содержимым
-//   const cardName = oneCard.querySelector('.elements__title');
-//   const image = oneCard.querySelector('.elements__image');
-//   const deleteBtn = oneCard.querySelector('.elements__delete-button');
-
-//   cardName.textContent = card.name;
-//   image.src = card.link;
-//   image.alt = card.name;
-
-//   // Показать иконку корзины на моей карточке
-//   if (!isOwner) {
-//     deleteBtn.classList.add('elements__delete-button_disabled');
-//   }
-
-//   // Попап картинки
-//   image.addEventListener('click', () => {
-//     popupItemTitle.textContent = cardName.textContent;
-//     popupItemImage.src = image.getAttribute('src');
-//     popupItemTitle.alt = cardName.getAttribute('src');
-//     openPopup(popupImage);
-//   })
-
-//   return oneCard;
-// }
-
-// Функция добавления карточки в HTML
-// function addNewCard(card) {
-//   gallery.prepend(createCard(card, true, false, 0));
-// }
-
-// Функция показать лайки
-function displayLikes(likeCounter, card) {
-  likeCounter.textContent = card.likes.length;
-}
-
-export {
-  //createCard,
- // addNewCard,
-};

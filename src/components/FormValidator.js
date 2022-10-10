@@ -1,11 +1,9 @@
 // Валидация форм
-
-// Класс валидатора
 export default class FormValidator {
   constructor(config, form) {
     this._formSelector = config.formSelector;
     this._inputSelector = config.inputSelector;
-    this._submitButtonSelector = config.submitButtonSelector; //Кнопка сабмита
+    this._submitButtonSelector = config.submitButtonSelector;
     this._inactiveButtonClass = config.inactiveButtonClass;
     this._inputErrorClass = config.inputErrorClass;
     this._errorClass = config.errorClass;
@@ -15,7 +13,7 @@ export default class FormValidator {
     this._inputList = Array.from(form.querySelectorAll(this._inputSelector));
   }
 
-  // Добавление класса с ошибкой
+  // Показать ошибку
   _showInputError(inputElem, errorMessage) {
     const errorElem = this._form.querySelector(`.${inputElem.id}-error`);
 
@@ -24,7 +22,7 @@ export default class FormValidator {
     errorElem.classList.add(this._errorClass);
   };
 
-  //Скрытие ошибок (удаление класса с ошибками)
+  // Скрыть ошибку
   _hideInputError(inputElem) {
     const errorElem = this._form.querySelector(`.${inputElem.id}-error`);
     inputElem.classList.remove(this._inputErrorClass);
@@ -32,18 +30,15 @@ export default class FormValidator {
     errorElem.textContent = '';
   };
 
-  //Метод определения корректности введённых данных
+  // Валидация
   _isValid(inputElem) {
     if (!inputElem.validity.valid) {
-      // Если поле не проходит валидацию, покажем ошибку
       this._showInputError(inputElem, inputElem.validationMessage);
     } else {
-      // Если проходит, скроем
       this._hideInputError(inputElem);
     }
   };
 
-  //Установка слушателей событий для валидации
   _setEventListeners(form) {
     this._toggleButtonState();
     this._inputList.forEach((inputElem) => {
@@ -54,14 +49,14 @@ export default class FormValidator {
     });
   };
 
-  //Метод проверяющий на валидность поля
+  // Проверка поля на валидность
   _hasInvalidInput(inputList) {
     return inputList.some((inputElem) => {
       return !inputElem.validity.valid;
     })
   };
 
-  //Работа с кнопкой
+  // Переключение состояния кнопки
   _toggleButtonState() {
     if (this._hasInvalidInput(this._inputList)) {
       this._buttonElem.classList.add(this._inactiveButtonClass);
